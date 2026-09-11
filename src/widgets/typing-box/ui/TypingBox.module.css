@@ -1,0 +1,39 @@
+.container {
+  font-family: monospace;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  user-select: none;
+}
+
+.char {
+  position: relative;
+  transition: color 0.1s ease;
+}
+
+.idle {
+  color: #888;
+}
+
+.correct {
+  color: #4caf50;
+}
+
+.incorrect {
+  color: #f44336;
+  background-color: rgba(244, 67, 54, 0.2);
+}
+
+.current {
+  border-left: 2px solid #2196f3;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    border-color: #2196f3;
+  }
+  50% {
+    border-color: transparent;
+  }
+}
