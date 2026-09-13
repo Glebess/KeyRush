@@ -1,0 +1,43 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* Используем глобальные переменные, которые мы обсуждали ранее */
+  background-color: var(--bg-main, #1e1e2e);
+  color: var(--text-primary, #cdd6f4);
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.header {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color, #313244);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logoCorrect {
+  color: var(--color-correct, #a6e3a1);
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-muted, #6c7086);
+  font-size: 0.9rem;
+}

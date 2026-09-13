@@ -36,7 +36,6 @@ export const useTypingEngine = (targetText: string) => {
         }
         return;
       }
-
       // Обработка обычного печатного символа
       if (key.length === 1 && currentIndex < targetText.length) {
         if (key === " ") {

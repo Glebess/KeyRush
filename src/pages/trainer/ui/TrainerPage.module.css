@@ -1,0 +1,15 @@
+.header {
+}
+.container_logo {
+  display: flex;
+  gap: 5px;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: monospace;
+}
+.logo_first_part {
+  color: #4caf50;
+}
+.logo_second_part {
+  color: #f44336;
+}
