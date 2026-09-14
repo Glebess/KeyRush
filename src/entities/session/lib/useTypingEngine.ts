@@ -10,6 +10,7 @@ export const useTypingEngine = (targetText: string) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [isEnded, setIsEnded] = useState<boolean>(false);
+  const [incorrectCount, setIncorrectCount] = useState<number>(0);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -49,7 +50,10 @@ export const useTypingEngine = (targetText: string) => {
           next[currentIndex].state = isCorrect ? "correct" : "incorrect";
           return next;
         });
-
+        //подсчет количества ошибок
+        setIncorrectCount((prevCount) =>
+          isCorrect ? prevCount : prevCount + 1,
+        );
         const nextIndex = currentIndex + 1;
         setCurrentIndex(nextIndex);
 
@@ -74,5 +78,6 @@ export const useTypingEngine = (targetText: string) => {
     currentIndex,
     isStarted,
     isEnded,
+    incorrectCount,
   };
 };

@@ -2,7 +2,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* Используем глобальные переменные, которые мы обсуждали ранее */
   background-color: var(--bg-main, #1e1e2e);
   color: var(--text-primary, #cdd6f4);
   font-family:
@@ -21,6 +20,8 @@
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
+  user-select: none;
+  -webkit-text-stroke: 0.25px var(--border-color);
 }
 
 .logoCorrect {
@@ -36,6 +37,10 @@
   justify-content: center;
   align-items: center;
   padding: 40px;
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
+  margin: 10px 20px;
+  border-radius: 20px;
 }
 
 .footer {
