@@ -11,7 +11,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
       <header className={styles.header}>
         <div className={styles.logo}>
           <span className={styles.logoCorrect}>Key</span>
-          <span>Rush</span>
+          <span className={styles.logoIncorrect}>Rush</span>
         </div>
       </header>
 

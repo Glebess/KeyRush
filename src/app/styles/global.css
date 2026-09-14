@@ -9,8 +9,8 @@
   --text-muted: #6c7086;
 
   /* Акцентные цвета для тренажера */
-  --color-correct: #a6e3a1;
-  --color-error: #f38ba8;
+  --color-correct: #4caf50;
+  --color-error: #f44336;
   --color-caret: #cba6f7;
 
   /* Глобальный сброс стилей[cite: 2] */

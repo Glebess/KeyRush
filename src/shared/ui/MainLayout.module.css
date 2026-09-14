@@ -24,7 +24,10 @@
 }
 
 .logoCorrect {
-  color: var(--color-correct, #a6e3a1);
+  color: var(--color-correct, #4caf50);
+}
+.logoIncorrect {
+  color: var(--color-incorrect, #f44336);
 }
 
 .main {
