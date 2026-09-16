@@ -1,7 +1,4 @@
 export type Language = "ru" | "en";
-export type TimeOption = 15 | 30 | 60;
-export type Mode = "words" | "time " | "errors";
-export type WordsOption = 10 | 25 | 50;
 
 export const DICTIONARIES: Record<Language, string[]> = {
   ru: [
