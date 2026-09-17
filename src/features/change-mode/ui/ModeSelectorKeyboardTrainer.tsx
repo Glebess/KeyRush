@@ -28,7 +28,16 @@ export const ModeSelectorKeyboardTrainer = ({
   return (
     <div className={styles.panel}>
       <div className={styles.group}>
-        <button className={styles.btn}>1</button>
+        {(["ru", "en"] as Language[]).map((lang) => (
+          <button
+            key={lang}
+            type="button"
+            onClick={() => onLanguageChange(lang)}
+            className={`${styles.btn} ${language === lang ? styles.active : ""}`}
+          >
+            {lang.toLocaleUpperCase()}
+          </button>
+        ))}
       </div>
     </div>
   );
