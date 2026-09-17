@@ -1,13 +1,23 @@
-.container_logo {
+.container {
+  flex: 1;
+  width: 100%;
   display: flex;
-  gap: 5px;
-  font-size: 18px;
-  font-weight: 500;
-  font-family: monospace;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
 }
-.logo_first_part {
-  color: #4caf50;
+.topBar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+  margin-bottom: auto;
 }
-.logo_second_part {
-  color: #f44336;
+.typingWrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

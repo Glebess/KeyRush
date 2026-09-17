@@ -1,0 +1,25 @@
+.panel {
+  display: flex;
+  width: 100%;
+  background-color: var(--bg-secondary, #181825);
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #313244);
+  user-select: none;
+  padding: 8px 16px;
+}
+.group {
+  display: flex;
+  gap: 6px;
+}
+.btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #6c7086);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}

@@ -1,3 +1,5 @@
+import styles from "./ModeSelectorKeyboardTrainer.module.css";
+
 export type Language = "ru" | "en";
 export type TimeOption = 15 | 30 | 60;
 export type Mode = "words" | "time" | "errors";
@@ -22,5 +24,12 @@ export const ModeSelectorKeyboardTrainer = ({
   selectedValue,
   onValueChange,
 }: ModeSelectorKeyboardTrainerProps) => {
-  return <div>1</div>;
+  const option = mode === "time" ? [15, 30, 60] : [10, 25, 50];
+  return (
+    <div className={styles.panel}>
+      <div className={styles.group}>
+        <button className={styles.btn}>1</button>
+      </div>
+    </div>
+  );
 };

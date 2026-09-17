@@ -3,7 +3,7 @@ import { MainLayout } from "@/shared/ui/MainLayout";
 export default function App() {
   return (
     <MainLayout>
-      <TrainerPage />;
+      <TrainerPage />
     </MainLayout>
   );
 }
