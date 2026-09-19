@@ -2,10 +2,9 @@ import type { TypedCharacter } from "../model/types";
 import { useState, useCallback, useEffect } from "react";
 
 export const useTypingEngine = (targetText: string) => {
-  // Состояние для хранения информации о каждом символе в тексте
-  const [charStates, setCharStates] = useState<TypedCharacter[]>(() => {
-    return targetText.split("").map((char) => ({ char, state: "idle" }));
-  });
+  const [charStates, setCharStates] = useState<TypedCharacter[]>(() =>
+    targetText.split("").map((char) => ({ char, state: "idle" })),
+  );
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -14,17 +13,14 @@ export const useTypingEngine = (targetText: string) => {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      // Игнорируем сочетания клавиш с Ctrl, Alt, Meta и не обрабатываем ввод, если сессия завершена
       if (e.ctrlKey || e.altKey || e.metaKey || isEnded) return;
 
       const key = e.key;
 
-      // Стартуем сессию при первом нажатии печатного символа
       if (!isStarted && key.length === 1) {
         setIsStarted(true);
       }
 
-      // Обработка нажатия клавиши Backspace
       if (key === "Backspace") {
         if (currentIndex > 0) {
           const prevIndex = currentIndex - 1;
@@ -37,10 +33,10 @@ export const useTypingEngine = (targetText: string) => {
         }
         return;
       }
-      // Обработка обычного печатного символа
+
       if (key.length === 1 && currentIndex < targetText.length) {
         if (key === " ") {
-          e.preventDefault(); // Предотвращаем скролл страницы от пробела
+          e.preventDefault();
         }
 
         const isCorrect = key === targetText[currentIndex];
@@ -50,10 +46,11 @@ export const useTypingEngine = (targetText: string) => {
           next[currentIndex].state = isCorrect ? "correct" : "incorrect";
           return next;
         });
-        //подсчет количества ошибок
+
         setIncorrectCount((prevCount) =>
           isCorrect ? prevCount : prevCount + 1,
         );
+
         const nextIndex = currentIndex + 1;
         setCurrentIndex(nextIndex);
 
@@ -65,7 +62,6 @@ export const useTypingEngine = (targetText: string) => {
     [currentIndex, isStarted, isEnded, targetText],
   );
 
-  // Добавление и очистка слушателя событий клавиатуры
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {

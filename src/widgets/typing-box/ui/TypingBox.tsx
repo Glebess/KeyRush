@@ -1,21 +1,25 @@
+import { useTypingEngine } from "@/entities/session";
 import styles from "./TypingBox.module.css";
+
 interface TypingBoxProps {
-  charStates: { char: string; state: "idle" | "correct" | "incorrect" }[];
-  currentIndex: number;
+  text: string;
 }
 
-export const TypingBox = ({ charStates, currentIndex }: TypingBoxProps) => {
+export const TypingBox = ({ text }: TypingBoxProps) => {
+  const { charStates, currentIndex } = useTypingEngine(text);
+
   return (
-    <div className={styles.container}>
-      {charStates.map((item, index) => {
-        const isCurrent = index === currentIndex;
-        const charClass = `${styles.char} ${styles[item.state]} ${isCurrent ? styles.current : ""}`;
-        return (
-          <span key={index} className={charClass}>
-            {item.char}
-          </span>
-        );
-      })}
+    <div className={styles.box}>
+      {charStates.map((item, index) => (
+        <span
+          key={index}
+          className={`${styles.char} ${styles[item.state]} ${
+            index === currentIndex ? styles.active : ""
+          }`}
+        >
+          {item.char}
+        </span>
+      ))}
     </div>
   );
 };
