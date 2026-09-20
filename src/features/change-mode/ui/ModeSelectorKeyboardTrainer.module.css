@@ -12,7 +12,7 @@
   align-items: center;
   gap: 6px;
   border-radius: 12px;
-  padding: 2.5px 2.5px;
+
   border: 1px solid var(--border-color, #313244);
 }
 .btn {
@@ -21,13 +21,14 @@
   color: var(--text-muted, #6c7086);
   font-weight: 600;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 11px;
+
   transition:
     color 0.15s ease,
     background-color 0.15s ease;
 }
 .active {
-  color: var(--color-correct, #a6e3a1);
-  background-color: rgba(166, 227, 161, 0.1);
+  color: var(--text-primary);
+  background-color: var(--border-color);
 }
