@@ -1,8 +1,9 @@
-.container {
+.box {
   font-family: monospace;
-  font-size: 2rem;
   letter-spacing: 2px;
   user-select: none;
+  font-size: 24px;
+  max-width: 90%;
 }
 
 .char {

@@ -20,7 +20,6 @@ const LANGUAGES: Language[] = ["ru", "en"];
 const MODES: Mode[] = ["words", "time"];
 const WORD_OPTION: OptionValue[] = [10, 15, 25, 50];
 const TIME_OPTION: OptionValue[] = [15, 30, 60, 120];
-
 export const ModeSelectorKeyboardTrainer: React.FC<
   ModeSelectorKeyboardTrainerProps
 > = ({
@@ -63,9 +62,22 @@ export const ModeSelectorKeyboardTrainer: React.FC<
             ))}
           </div>
 
-          <div className={styles.divider} />
+          <div className={styles.line} />
         </>
       )}
+      <div>
+        {currentOption.map((val) => (
+          <button
+            key={val}
+            type="button"
+            className={`${styles.btn} ${selectedValue === val ? styles.active : ""}`}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => onValueChange(val)}
+          >
+            {val}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,7 +1,6 @@
 .panel {
   display: flex;
   width: 100%;
-  background-color: var(--bg-secondary, #181825);
   border-radius: 8px;
   border: 1px solid var(--border-color, #313244);
   user-select: none;
@@ -13,8 +12,8 @@
   align-items: center;
   gap: 6px;
   border-radius: 12px;
-  border: 1px solid var(--border-color, #313244);
 }
+
 .btn {
   background: transparent;
   border: none;
@@ -23,7 +22,6 @@
   cursor: pointer;
   padding: 6px 12px;
   border-radius: 11px;
-
   transition:
     color 0.15s ease,
     background-color 0.15s ease;

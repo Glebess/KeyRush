@@ -14,7 +14,7 @@ export const TypingBox = ({ text }: TypingBoxProps) => {
         <span
           key={index}
           className={`${styles.char} ${styles[item.state]} ${
-            index === currentIndex ? styles.active : ""
+            index === currentIndex ? styles.current : ""
           }`}
         >
           {item.char}

@@ -19,6 +19,9 @@ export const TrainerPage = () => {
     setMode(newMode);
     setSelectedValue(newMode === "time" ? 30 : 25);
   };
+  const handleValueChange = (newValue: OptionValue): void => {
+    setSelectedValue(newValue);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
@@ -27,6 +30,7 @@ export const TrainerPage = () => {
           onLanguageChange={setLanguage}
           mode={mode}
           onModeChange={handleModeChange}
+          onValueChange={handleValueChange}
         />
       </div>
 
