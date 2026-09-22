@@ -11,16 +11,22 @@ import {
 } from "@/features/change-mode/ui/ModeSelectorKeyboardTrainer";
 export const TrainerPage = () => {
   const [language, setLanguage] = useState<Language>("ru");
-  const [selectedValue, setSelectedValue] = useState<OptionValue>(25);
+  const [wordsCount, setWordsCount] = useState<OptionValue>(25);
+  const [timeSecond, setTimeSecond] = useState<OptionValue>(30);
   const [mode, setMode] = useState<Mode>("words");
-  const text = generateText(language, selectedValue);
+
+  const activeValue = mode === "words" ? wordsCount : timeSecond;
+  const text = generateText(language, mode === "time" ? 100 : wordsCount);
 
   const handleModeChange = (newMode: Mode): void => {
     setMode(newMode);
-    setSelectedValue(newMode === "time" ? 30 : 25);
   };
-  const handleValueChange = (newValue: OptionValue): void => {
-    setSelectedValue(newValue);
+  const handleValueChange = (val: OptionValue): void => {
+    if (mode === "time") {
+      setTimeSecond(val);
+    } else {
+      setWordsCount(val);
+    }
   };
   return (
     <div className={styles.container}>
@@ -31,6 +37,7 @@ export const TrainerPage = () => {
           mode={mode}
           onModeChange={handleModeChange}
           onValueChange={handleValueChange}
+          selectedValue={activeValue}
         />
       </div>
 

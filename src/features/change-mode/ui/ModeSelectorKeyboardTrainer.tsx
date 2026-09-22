@@ -1,11 +1,8 @@
 import styles from "./ModeSelectorKeyboardTrainer.module.css";
 
 export type Language = "ru" | "en";
-export type TimeOption = 15 | 30 | 60 | 120;
 export type Mode = "words" | "time";
-export type WordsOption = 10 | 15 | 25 | 50;
-
-export type OptionValue = TimeOption | WordsOption;
+export type OptionValue = number;
 
 interface ModeSelectorKeyboardTrainerProps {
   language: Language;
@@ -27,8 +24,8 @@ export const ModeSelectorKeyboardTrainer: React.FC<
   onLanguageChange,
   mode = "words",
   onModeChange,
-  selectedValue = 25,
   onValueChange,
+  selectedValue,
 }) => {
   const currentOption = mode === "words" ? WORD_OPTION : TIME_OPTION;
   return (
