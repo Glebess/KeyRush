@@ -34,6 +34,10 @@ export const ModeSelectorKeyboardTrainer: React.FC<
   const isCustomValue = !currentOption.includes(selectedValue);
   const [isCustomValueModalOpen, setIsCustomValueModalOpen] =
     useState<boolean>(false);
+
+  const handleCustomSubmit = (customVal: number) => {
+    onValueChange(customVal); // Обновляем состояние в TrainerPage
+  };
   return (
     <>
       <div className={styles.panel}>
@@ -87,9 +91,7 @@ export const ModeSelectorKeyboardTrainer: React.FC<
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => setIsCustomValueModalOpen(!isCustomValueModalOpen)}
             title="Задать свое значение"
-          >
-            {isCustomValue ? 1 : "⚙"}
-          </button>
+          ></button>
         </div>
       </div>
       {isCustomValueModalOpen && (
@@ -97,6 +99,7 @@ export const ModeSelectorKeyboardTrainer: React.FC<
           mode={mode}
           isOpen={isCustomValueModalOpen}
           onClose={() => setIsCustomValueModalOpen(false)}
+          onSubmit={handleCustomSubmit}
         />
       )}
     </>

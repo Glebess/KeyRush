@@ -1,6 +1,7 @@
 import styles from "./CustomValueModal.module.css";
 import { type Mode } from "../ModeSelectorKeyboardTrainer";
 import { useEffect, useRef, useState } from "react";
+import { X } from "lucide-react";
 interface CustomValueModalProps {
   isOpen: boolean;
   mode: Mode;
@@ -15,19 +16,62 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState<string>(String(0));
   const inputRef = useRef<HTMLInputElement>(null);
+  const parse = parseInt(inputValue, 10);
 
+  //Фокус на инпуте при открытии
   useEffect(() => {
     setTimeout(() => inputRef.current?.focus(), 50);
   }, [isOpen]);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const min = 0;
+    const max = mode === "words" ? 1000 : 7200;
+
+    if (!isNaN(parse) && parse >= min && parse <= max) {
+      onSubmit(parse);
+      onClose();
+    }
+  };
+  // const validationInput = (mode : Mode) : void => {
+  //   if(mode === 'words'){
+
+  //   }
+
+  // }
   const handleCloseModal = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
       onClose();
     }
   };
   return (
-    <div>
-      <p>1</p>
+    <div onKeyDown={handleCloseModal} className={styles.overlay}>
+      <div className={styles.modal}>
+        <h3>
+          {mode === "words"
+            ? "Свое количество слов"
+            : "Продолжительность теста"}
+        </h3>
+
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <input
+            type="number"
+            required
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Свое значение"
+          />
+
+          <h5>
+            Чтобы начать бесконеный тест,введите 0.Чтобы завершить бесконечный
+            тест нажмите <span>esc</span> или кнопку прервать.
+          </h5>
+
+          <button disabled={parse < 0} type="submit">
+            Применить
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

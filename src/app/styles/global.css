@@ -7,11 +7,16 @@
   /* Цвета текста */
   --text-primary: #cdd6f4;
   --text-muted: #6c7086;
+  --text-modal: var(--text-muted);
 
   /* Акцентные цвета для тренажера */
   --color-correct: #4caf50;
   --color-error: #f44336;
   --color-caret: #cba6f7;
+
+  /* Цвета модалок */
+  --modal-bg-main: #191a1b;
+  --modal-br: #111111;
 
   /* Глобальный сброс стилей[cite: 2] */
   body {
@@ -27,6 +32,10 @@
       sans-serif;
   }
 }
+::selection {
+  background-color: #af79f1;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

@@ -6,6 +6,7 @@
   user-select: none;
   padding: 8px 16px;
   gap: 20px;
+  align-items: center;
 }
 .group {
   display: flex;
@@ -22,9 +23,13 @@
   cursor: pointer;
   padding: 6px 12px;
   border-radius: 11px;
+  align-items: center;
+  justify-content: center;
   transition:
     color 0.15s ease,
     background-color 0.15s ease;
+}
+.btn:last-child {
 }
 .active {
   color: var(--text-primary);
@@ -32,4 +37,17 @@
 }
 .line {
   border: 1px solid var(--border-color);
+  height: 100%;
+}
+.btn_svg {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #6c7086);
+  font-weight: 600;
+  cursor: pointer;
+
+  border-radius: 11px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
