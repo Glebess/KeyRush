@@ -2,18 +2,12 @@ import { useState } from "react";
 import styles from "./ModeSelectorKeyboardTrainer.module.css";
 import { Settings } from "lucide-react";
 import { CustomValueModal } from "./CustomValueModal.tsx/CustomValueModal";
-export type Language = "ru" | "en";
-export type Mode = "words" | "time";
-export type OptionValue = number;
-
-interface ModeSelectorKeyboardTrainerProps {
-  language: Language;
-  onLanguageChange: (lang: Language) => void;
-  mode: Mode;
-  onModeChange: (mode: Mode) => void;
-  selectedValue: number;
-  onValueChange: (val: OptionValue) => void;
-}
+import type {
+  Language,
+  Mode,
+  OptionValue,
+  ModeSelectorKeyboardTrainerProps,
+} from "../model/types";
 
 const LANGUAGES: Language[] = ["ru", "en"];
 const MODES: Mode[] = ["words", "time"];
@@ -36,7 +30,7 @@ export const ModeSelectorKeyboardTrainer: React.FC<
     useState<boolean>(false);
 
   const handleCustomSubmit = (customVal: number) => {
-    onValueChange(customVal); // Обновляем состояние в TrainerPage
+    onValueChange(customVal);
   };
   return (
     <>
@@ -73,7 +67,7 @@ export const ModeSelectorKeyboardTrainer: React.FC<
             <div className={styles.line} />
           </>
         )}
-        <div>
+        <div className={styles.group}>
           {currentOption.map((val) => (
             <button
               key={val}
@@ -91,7 +85,9 @@ export const ModeSelectorKeyboardTrainer: React.FC<
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => setIsCustomValueModalOpen(!isCustomValueModalOpen)}
             title="Задать свое значение"
-          ></button>
+          >
+            <Settings size={22} />
+          </button>
         </div>
       </div>
       {isCustomValueModalOpen && (

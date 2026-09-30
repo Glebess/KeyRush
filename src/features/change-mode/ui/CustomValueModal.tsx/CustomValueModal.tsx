@@ -1,13 +1,8 @@
 import styles from "./CustomValueModal.module.css";
-import { type Mode } from "../ModeSelectorKeyboardTrainer";
+import type { CustomValueModalProps } from "../../model/types";
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
-interface CustomValueModalProps {
-  isOpen: boolean;
-  mode: Mode;
-  onClose: () => void;
-  onSubmit: (val: number) => void;
-}
+// import { X } from "lucide-react";
+
 export const CustomValueModal: React.FC<CustomValueModalProps> = ({
   isOpen,
   mode,

@@ -16,20 +16,25 @@
 }
 
 .btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted, #6c7086);
-  font-weight: 600;
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: 11px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition:
-    color 0.15s ease,
-    background-color 0.15s ease;
+  height: 32px;
+  min-width: 32px;
+  padding: 0 10px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #646669;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
-.btn:last-child {
+
+.btn svg {
+  display: block;
+  flex-shrink: 0;
 }
 .active {
   color: var(--text-primary);
