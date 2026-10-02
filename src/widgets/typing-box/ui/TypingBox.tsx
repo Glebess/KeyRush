@@ -1,10 +1,18 @@
 import { useTypingEngine } from "@/entities/session";
 import styles from "./TypingBox.module.css";
-import type { WordStatus, TypingBoxProps } from "../model/types";
+import type { TypingBoxProps } from "../model/types";
 export const TypingBox = ({ text }: TypingBoxProps) => {
-  const { charStates, currentIndex } = useTypingEngine(text);
-  const words = text.split(" ");
+  const {
+    words,
+    charStates,
+    currentIndex,
+    currentWordIndex,
+    wordStatuses,
+    isCurrentWordHasError,
+    stats,
+  } = useTypingEngine(text);
 
+  const totalWords = words.length;
   return (
     <div className={styles.box}>
       {charStates.map((item, index) => (

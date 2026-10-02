@@ -2,7 +2,6 @@ import { TypingBox } from "@/widgets/typing-box";
 import { generateText } from "@/entities/word-list";
 import styles from "./TrainerPage.module.css";
 import { useState } from "react";
-
 import {
   ModeSelectorKeyboardTrainer,
   type Language,
