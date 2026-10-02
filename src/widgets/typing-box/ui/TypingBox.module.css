@@ -9,9 +9,6 @@
 .char {
   position: relative;
   transition: color 0.1s ease;
-}
-
-.idle {
   color: #888;
 }
 
@@ -21,7 +18,10 @@
 
 .incorrect {
   color: #f44336;
-  background-color: rgba(244, 67, 54, 0.2);
+  text-underline-offset: 4px;
+}
+.wordIncorrect {
+  text-decoration: underline #f44336;
 }
 
 .current {
