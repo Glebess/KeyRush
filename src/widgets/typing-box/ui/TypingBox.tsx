@@ -8,6 +8,8 @@ export const TypingBox = ({
   text,
   selectedMode,
   timeLimit,
+  isInfinite = false,
+  onLoadMore,
 }: TypingBoxProps) => {
   const {
     words,
@@ -22,7 +24,16 @@ export const TypingBox = ({
   const boxRef = useRef<HTMLDivElement>(null);
   const totalWords = words.length;
 
-  // Автоматический скролл - держит активную строку посередине
+  // Автоматическая подгрузка новых слов (только в бесконечном режиме)
+  useEffect(() => {
+    if (!isInfinite || !onLoadMore) return;
+
+    if (totalWords - currentWordIndex < 15) {
+      onLoadMore();
+    }
+  }, [currentWordIndex, totalWords, isInfinite, onLoadMore]);
+
+  // Автоматический скролл — держит активную строку посередине
   useEffect(() => {
     if (!boxRef.current) return;
 
@@ -46,7 +57,9 @@ export const TypingBox = ({
       <div className={styles.statsBar}>
         <span>
           {selectedMode === "words"
-            ? `${currentWordIndex} / ${totalWords}`
+            ? isInfinite
+              ? `${currentWordIndex} / ∞`
+              : `${currentWordIndex} / ${totalWords}`
             : `${timeLeft}s`}
         </span>
       </div>

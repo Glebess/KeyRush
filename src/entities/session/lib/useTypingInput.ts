@@ -1,5 +1,4 @@
-/* Обработка keydown , заполнение массива charStates и подсчет общего количества промахов */
-
+// src/entities/session/lib/useTypingInput.ts
 import { useState, useCallback, useEffect } from "react";
 import type { TypedCharacter } from "../model/types";
 
@@ -11,6 +10,31 @@ export const useTypingInput = (targetText: string) => {
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [isEnded, setIsEnded] = useState<boolean>(false);
   const [totalMisses, setTotalMisses] = useState<number>(0);
+
+  const [prevTargetText, setPrevTargetText] = useState(targetText);
+
+  if (targetText !== prevTargetText) {
+    setPrevTargetText(targetText);
+
+    // Если новый текст начинается со старого - это подгрузка порции
+    if (prevTargetText.length > 0 && targetText.startsWith(prevTargetText)) {
+      const addedChars = targetText.slice(prevTargetText.length);
+      setCharStates((prev) => [
+        ...prev,
+        ...addedChars
+          .split("")
+          .map((char) => ({ char, state: "idle" as const })),
+      ]);
+    } else {
+      setCharStates(
+        targetText.split("").map((char) => ({ char, state: "idle" as const })),
+      );
+      setCurrentIndex(0);
+      setIsStarted(false);
+      setIsEnded(false);
+      setTotalMisses(0);
+    }
+  }
 
   const finishSession = useCallback(() => {
     setIsEnded(true);
@@ -39,7 +63,6 @@ export const useTypingInput = (targetText: string) => {
         return;
       }
 
-      // Обработка символьного ввода
       if (key.length === 1 && currentIndex < targetText.length) {
         if (key === " ") e.preventDefault();
 

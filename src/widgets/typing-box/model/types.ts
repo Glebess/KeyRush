@@ -5,4 +5,6 @@ export interface TypingBoxProps {
   onComplete?: () => void;
   selectedMode: Mode;
   timeLimit: number;
+  onLoadMore?: () => void;
+  isInfinite: boolean;
 }

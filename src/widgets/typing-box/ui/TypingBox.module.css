@@ -11,11 +11,17 @@
   user-select: none;
   font-size: 24px;
   max-width: 90%;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.8rem;
+  line-height: 2.5rem;
+
+  max-height: calc(2.5rem * 3 + 0.6rem * 2);
+  align-content: flex-start;
+
   overflow: hidden;
   position: relative;
-
-  line-height: 2.5rem;
-  height: 7.5rem;
 }
 .statsBar {
   font-size: 20px;
