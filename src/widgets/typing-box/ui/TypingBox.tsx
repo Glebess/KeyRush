@@ -2,8 +2,11 @@ import { useTypingEngine } from "@/entities/session";
 import { Word } from "./Word/Word";
 import type { TypingBoxProps } from "../model/types";
 import styles from "./TypingBox.module.css";
-
-export const TypingBox = ({ text }: TypingBoxProps) => {
+export const TypingBox = ({
+  text,
+  selectedMode,
+  timeLimit,
+}: TypingBoxProps) => {
   const {
     words,
     charStates,
@@ -11,7 +14,8 @@ export const TypingBox = ({ text }: TypingBoxProps) => {
     currentWordIndex,
     wordStatuses,
     isCurrentWordHasError,
-  } = useTypingEngine(text);
+    timeLeft,
+  } = useTypingEngine(text, { mode: selectedMode, timeLimit });
 
   const totalWords = words.length;
 
@@ -19,7 +23,9 @@ export const TypingBox = ({ text }: TypingBoxProps) => {
     <div className={styles.wrapper}>
       <div className={styles.statsBar}>
         <span>
-          Слова: {currentWordIndex} / {totalWords}
+          {selectedMode === "words"
+            ? `${currentWordIndex} / ${totalWords}`
+            : timeLeft}
         </span>
       </div>
 

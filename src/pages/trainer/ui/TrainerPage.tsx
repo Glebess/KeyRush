@@ -41,7 +41,12 @@ export const TrainerPage = () => {
       </div>
 
       <div className={styles.typingWrapper}>
-        <TypingBox text={text} key={text} />
+        <TypingBox
+          text={text}
+          key={text}
+          selectedMode={mode}
+          timeLimit={timeSecond}
+        />
       </div>
     </div>
   );

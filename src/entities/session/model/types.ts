@@ -21,3 +21,17 @@ export interface TypedCharacter {
   state: CharacterState;
 }
 export type WordStatus = "pending" | "correct" | "incorrect" | "current";
+
+export interface UseTimerProps {
+  isStarted: boolean;
+  isEnded: boolean;
+  duration: number;
+  enabled: boolean;
+  onTimeUp: () => void;
+}
+
+export type TypingMode = "words" | "time";
+export interface TypingEngineOptions {
+  mode?: TypingMode;
+  timeLimit?: number;
+}

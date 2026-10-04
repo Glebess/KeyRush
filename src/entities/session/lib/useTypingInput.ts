@@ -12,6 +12,10 @@ export const useTypingInput = (targetText: string) => {
   const [isEnded, setIsEnded] = useState<boolean>(false);
   const [totalMisses, setTotalMisses] = useState<number>(0);
 
+  const finishSession = useCallback(() => {
+    setIsEnded(true);
+  }, []);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.ctrlKey || e.altKey || e.metaKey || isEnded) return;
@@ -73,5 +77,6 @@ export const useTypingInput = (targetText: string) => {
     isStarted,
     isEnded,
     totalMisses,
+    finishSession,
   };
 };
