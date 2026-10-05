@@ -87,7 +87,6 @@ export const ModeSelectorKeyboardTrainer: React.FC<
         {/* Режимы */}
         {onModeChange && (
           <>
-            <div className={styles.line} />
             <div className={styles.group}>
               {(Object.keys(BUTTON_CONFIG) as Mode[]).map((m) => {
                 const { label, icon } = BUTTON_CONFIG[m];
@@ -111,7 +110,6 @@ export const ModeSelectorKeyboardTrainer: React.FC<
         {/* Опции текущего режима */}
         {currentOption.length > 0 && (
           <>
-            <div className={styles.line} />
             <div className={styles.group}>
               {currentOption.map((val) => (
                 <button

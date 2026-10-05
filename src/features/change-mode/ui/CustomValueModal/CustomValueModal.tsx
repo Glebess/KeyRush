@@ -15,7 +15,7 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
 
   //Фокус на инпуте при открытии
   useEffect(() => {
-    setTimeout(() => inputRef.current?.focus(), 50);
+    inputRef.current?.focus();
   }, [isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -55,6 +55,7 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Свое значение"
+            ref={inputRef}
           />
 
           <h5>

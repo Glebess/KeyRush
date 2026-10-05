@@ -2,20 +2,20 @@
   display: flex;
   width: 100%;
   border-radius: 8px;
-  background-color: var(--modal-bg-main);
   user-select: none;
   padding: 8px 16px;
   gap: 20px;
   align-items: center;
   justify-content: center;
-  width: 50%;
 }
 .group {
   display: flex;
   align-items: center;
   gap: 6px;
   border-radius: 12px;
+  padding: 8px 16px;
   transition: 0.5s ease;
+  background-color: var(--modal-bg-main);
 }
 
 .btn {
