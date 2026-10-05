@@ -2,17 +2,20 @@
   display: flex;
   width: 100%;
   border-radius: 8px;
-  border: 1px solid var(--border-color, #313244);
+  background-color: var(--modal-bg-main);
   user-select: none;
   padding: 8px 16px;
   gap: 20px;
   align-items: center;
+  justify-content: center;
+  width: 50%;
 }
 .group {
   display: flex;
   align-items: center;
   gap: 6px;
   border-radius: 12px;
+  transition: 0.5s ease;
 }
 
 .btn {
@@ -30,15 +33,20 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-sizing: border-box;
+  gap: 5px;
 }
-
+.btn:hover {
+  color: white;
+}
 .btn svg {
   display: block;
   flex-shrink: 0;
 }
+.btn svg:nth-of-type(2) {
+  background-color: aliceblue;
+}
 .active {
-  color: var(--text-primary);
-  background-color: var(--border-color);
+  color: #2196f3;
 }
 .line {
   border: 1px solid var(--border-color);

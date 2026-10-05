@@ -20,4 +20,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+.quoteSource {
+  color: var(--text-muted);
+  padding-top: 10px;
 }

@@ -1,5 +1,5 @@
 export { ModeSelectorKeyboardTrainer } from "./ui/ModeSelectorKeyboardTrainer";
-export { CustomValueModal } from "./ui/CustomValueModal.tsx/CustomValueModal";
+export { CustomValueModal } from "./ui/CustomValueModal/CustomValueModal";
 
 export type {
   Language,

@@ -1,6 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { TypingBox } from "@/widgets/typing-box";
 import { generateText } from "@/entities/word-list";
+import {
+  getRandomQuote,
+  type Quote,
+  type QuoteLengthCategory,
+} from "@/entities/quote";
 import {
   ModeSelectorKeyboardTrainer,
   type Language,
@@ -13,47 +18,79 @@ export const TrainerPage = () => {
   const [language, setLanguage] = useState<Language>("ru");
   const [wordsCount, setWordsCount] = useState<OptionValue>(25);
   const [timeSecond, setTimeSecond] = useState<OptionValue>(30);
+  const [quoteLength, setQuoteLength] = useState<OptionValue>("all");
   const [mode, setMode] = useState<Mode>("words");
 
-  const activeValue = mode === "words" ? wordsCount : timeSecond;
+  const [currentQuote, setCurrentQuote] = useState<Quote | null>(null);
+  const [text, setText] = useState<string>("");
+  const [sessionKey, setSessionKey] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const isInfinite = Number(activeValue) === 0;
+  const activeValue =
+    mode === "words" ? wordsCount : mode === "time" ? timeSecond : quoteLength;
 
+  const isInfinite = mode === "words" && Number(activeValue) === 0;
   const timeLimitNumber = Number(timeSecond) || 0;
   const wordsCountNumber = Number(wordsCount) || 0;
 
-  const initialCount = isInfinite
-    ? 50
-    : mode === "time"
-      ? Math.max(150, timeLimitNumber * 4)
-      : wordsCountNumber;
+  // Автоматическая загрузка нового текста/цитаты при смене настроек
+  useEffect(() => {
+    let isMounted = true;
 
-  const currentConfigKey = `${language}-${mode}-${wordsCountNumber}-${timeLimitNumber}-${isInfinite}`;
+    const loadSessionData = async () => {
+      setIsLoading(true);
 
-  const [prevConfigKey, setPrevConfigKey] = useState(currentConfigKey);
-  const [text, setText] = useState(() => generateText(language, initialCount));
-  const [sessionKey, setSessionKey] = useState(0);
+      if (mode === "quote") {
+        try {
+          const category = (quoteLength as QuoteLengthCategory) || "all";
+          const quote = await getRandomQuote(language, category);
 
-  if (prevConfigKey !== currentConfigKey) {
-    setPrevConfigKey(currentConfigKey);
-    setText(generateText(language, initialCount));
-    setSessionKey((prev) => prev + 1);
-  }
+          if (isMounted) {
+            setCurrentQuote(quote);
+            setText(quote.text);
+            setSessionKey((prev) => prev + 1);
+          }
+        } catch (error) {
+          console.error("Ошибка при подгрузке цитаты:", error);
+        }
+      } else {
+        setCurrentQuote(null);
+        const initialCount = isInfinite
+          ? 50
+          : mode === "time"
+            ? Math.max(150, timeLimitNumber * 4)
+            : wordsCountNumber;
 
+        const generated = generateText(language, initialCount);
+        if (isMounted) {
+          setText(generated);
+          setSessionKey((prev) => prev + 1);
+        }
+      }
+
+      if (isMounted) {
+        setIsLoading(false);
+      }
+    };
+
+    loadSessionData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [language, mode, wordsCount, timeSecond, quoteLength, isInfinite]);
+
+  // Дозагрузка слов для бесконечного режима
   const handleLoadMoreWords = useCallback(() => {
-    setText((prevText) => `${prevText} ${generateText(language, 30)}`);
-  }, [language]);
-
-  const handleModeChange = (newMode: Mode): void => {
-    setMode(newMode);
-  };
+    if (mode === "words" && isInfinite) {
+      setText((prevText) => `${prevText} ${generateText(language, 30)}`);
+    }
+  }, [language, mode, isInfinite]);
 
   const handleValueChange = (val: OptionValue): void => {
-    if (mode === "time") {
-      setTimeSecond(val);
-    } else {
-      setWordsCount(val);
-    }
+    if (mode === "time") setTimeSecond(val);
+    else if (mode === "words") setWordsCount(val);
+    else if (mode === "quote") setQuoteLength(val);
   };
 
   return (
@@ -63,21 +100,29 @@ export const TrainerPage = () => {
           language={language}
           onLanguageChange={setLanguage}
           mode={mode}
-          onModeChange={handleModeChange}
+          onModeChange={setMode}
           onValueChange={handleValueChange}
           selectedValue={activeValue}
         />
       </div>
 
       <div className={styles.typingWrapper}>
-        <TypingBox
-          key={sessionKey}
-          text={text}
-          selectedMode={mode}
-          timeLimit={timeLimitNumber}
-          isInfinite={isInfinite}
-          onLoadMore={handleLoadMoreWords}
-        />
+        {isLoading || !text ? (
+          <div className={styles.loading}>Загрузка цитаты...</div>
+        ) : (
+          <TypingBox
+            key={sessionKey}
+            text={text}
+            selectedMode={mode === "time" ? "time" : "words"}
+            timeLimit={timeLimitNumber}
+            isInfinite={isInfinite}
+            onLoadMore={handleLoadMoreWords}
+          />
+        )}
+
+        {mode === "quote" && currentQuote && !isLoading && (
+          <div className={styles.quoteSource}>— {currentQuote.source}</div>
+        )}
       </div>
     </div>
   );

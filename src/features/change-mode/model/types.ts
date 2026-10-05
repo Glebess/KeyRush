@@ -1,6 +1,7 @@
+import type { QuoteLengthCategory } from "@/entities/quote/model/types";
 export type Language = "ru" | "en";
-export type Mode = "words" | "time";
-export type OptionValue = number;
+export type Mode = "words" | "time" | "quote" | "zen";
+export type OptionValue = number | QuoteLengthCategory;
 
 export interface ModeSelectorKeyboardTrainerProps {
   language: Language;
