@@ -3,7 +3,6 @@ import { useTypingEngine } from "@/entities/session";
 import { Word } from "./Word/Word";
 import type { TypingBoxProps } from "../model/types";
 import styles from "./TypingBox.module.css";
-
 export const TypingBox = ({
   text,
   selectedMode,

@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { TypingBox } from "@/widgets/typing-box";
 import { generateText } from "@/entities/word-list";
+import { translateIcon } from "@/shared/assets/svg/TrainerPageSvg";
+import { ChangeLanguageTypingModal } from "./ChangeLanguageTypingModal/ChangeLanguageTypingModal";
 import {
   getRandomQuote,
   type Quote,
@@ -20,6 +22,9 @@ export const TrainerPage = () => {
   const [timeSecond, setTimeSecond] = useState<OptionValue>(30);
   const [quoteLength, setQuoteLength] = useState<OptionValue>("all");
   const [mode, setMode] = useState<Mode>("words");
+
+  const [isModalChangeTypingLanguage, setIsModalChangeTypingLanguage] =
+    useState<boolean>(false);
 
   const [currentQuote, setCurrentQuote] = useState<Quote | null>(null);
   const [text, setText] = useState<string>("");
@@ -92,13 +97,13 @@ export const TrainerPage = () => {
     else if (mode === "words") setWordsCount(val);
     else if (mode === "quote") setQuoteLength(val);
   };
-
+  const handleLanguageTypingOpen = () => {
+    setIsModalChangeTypingLanguage(!isModalChangeTypingLanguage);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
         <ModeSelectorKeyboardTrainer
-          language={language}
-          onLanguageChange={setLanguage}
           mode={mode}
           onModeChange={setMode}
           onValueChange={handleValueChange}
@@ -107,18 +112,21 @@ export const TrainerPage = () => {
       </div>
 
       <div className={styles.typingWrapper}>
-        {isLoading || !text ? (
-          <div className={styles.loading}>Загрузка цитаты...</div>
-        ) : (
-          <TypingBox
-            key={sessionKey}
-            text={text}
-            selectedMode={mode === "time" ? "time" : "words"}
-            timeLimit={timeLimitNumber}
-            isInfinite={isInfinite}
-            onLoadMore={handleLoadMoreWords}
-          />
-        )}
+        {isModalChangeTypingLanguage && <ChangeLanguageTypingModal />}
+        <div className={styles.language} title="выбрать язык печати">
+          <button onClick={() => handleLanguageTypingOpen()}>
+            {translateIcon}
+            {language}
+          </button>
+        </div>
+        <TypingBox
+          key={sessionKey}
+          text={text}
+          selectedMode={mode === "time" ? "time" : "words"}
+          timeLimit={timeLimitNumber}
+          isInfinite={isInfinite}
+          onLoadMore={handleLoadMoreWords}
+        />
 
         {mode === "quote" && currentQuote && !isLoading && (
           <div className={styles.quoteSource}>— {currentQuote.source}</div>

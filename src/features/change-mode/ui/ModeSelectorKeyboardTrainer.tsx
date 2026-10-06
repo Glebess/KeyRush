@@ -4,13 +4,11 @@ import { CustomValueModal } from "./CustomValueModal/CustomValueModal";
 import { quoteIcon, timeIcon, wordsIcon, zenIcon } from "./Svg";
 import styles from "./ModeSelectorKeyboardTrainer.module.css";
 import type {
-  Language,
   Mode,
   OptionValue,
   ModeSelectorKeyboardTrainerProps,
 } from "../model/types";
 
-const LANGUAGES: Language[] = ["ru", "en"];
 const WORD_OPTION: OptionValue[] = [10, 15, 25, 100];
 const TIME_OPTION: OptionValue[] = [15, 30, 60, 120];
 const QUOTE_OPTION: OptionValue[] = ["all", "short", "medium", "long", "huge"];
@@ -39,14 +37,7 @@ const OPTION_LABELS: Record<string, string> = {
 
 export const ModeSelectorKeyboardTrainer: React.FC<
   ModeSelectorKeyboardTrainerProps
-> = ({
-  language,
-  onLanguageChange,
-  mode = "words",
-  onModeChange,
-  onValueChange,
-  selectedValue,
-}) => {
+> = ({ mode = "words", onModeChange, onValueChange, selectedValue }) => {
   const currentOption = OPTIONS_BY_MODE[mode] || [];
   const isCustomModeSupported = mode === "words" || mode === "time";
   const isCustomValue =
@@ -70,20 +61,6 @@ export const ModeSelectorKeyboardTrainer: React.FC<
   return (
     <>
       <div className={styles.panel}>
-        {/* Языки */}
-        <div className={styles.group}>
-          {LANGUAGES.map((lang) => (
-            <button
-              key={lang}
-              type="button"
-              onClick={() => onLanguageChange(lang)}
-              className={`${styles.btn} ${language === lang ? styles.active : ""}`}
-            >
-              {lang.toUpperCase()}
-            </button>
-          ))}
-        </div>
-
         {/* Режимы */}
         {onModeChange && (
           <>
