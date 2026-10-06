@@ -1,8 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { TypingBox } from "@/widgets/typing-box";
-import { generateText } from "@/entities/word-list";
+import {
+  loadLanguageWords,
+  getRandomWordsFromPool,
+} from "@/entities/word-list";
 import { translateIcon } from "@/shared/assets/svg/TrainerPageSvg";
 import { ChangeLanguageTypingModal } from "./ChangeLanguageTypingModal/ChangeLanguageTypingModal";
+import { CONFIG_LANGUAGE } from "@/shared/assets/language/CONFIG_LANGUAGE";
+import type { LanguageConfig } from "@/shared/assets/language/CONFIG_LANGUAGE";
 import {
   getRandomQuote,
   type Quote,
@@ -10,14 +15,21 @@ import {
 } from "@/entities/quote";
 import {
   ModeSelectorKeyboardTrainer,
-  type Language,
   type OptionValue,
   type Mode,
 } from "@/features/change-mode/ui/ModeSelectorKeyboardTrainer";
 import styles from "./TrainerPage.module.css";
 
 export const TrainerPage = () => {
-  const [language, setLanguage] = useState<Language>("ru");
+  const [selectedLanguage, setSelectedLanguage] = useState<LanguageConfig>(
+    CONFIG_LANGUAGE[0] || {
+      id: "russian",
+      label: "Русский",
+      baseLang: "ru",
+      fileName: "russian.json",
+    },
+  );
+
   const [wordsCount, setWordsCount] = useState<OptionValue>(25);
   const [timeSecond, setTimeSecond] = useState<OptionValue>(30);
   const [quoteLength, setQuoteLength] = useState<OptionValue>("all");
@@ -27,6 +39,7 @@ export const TrainerPage = () => {
     useState<boolean>(false);
 
   const [currentQuote, setCurrentQuote] = useState<Quote | null>(null);
+  const [currentWordsPool, setCurrentWordsPool] = useState<string[]>([]);
   const [text, setText] = useState<string>("");
   const [sessionKey, setSessionKey] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,7 +51,6 @@ export const TrainerPage = () => {
   const timeLimitNumber = Number(timeSecond) || 0;
   const wordsCountNumber = Number(wordsCount) || 0;
 
-  // Автоматическая загрузка нового текста/цитаты при смене настроек
   useEffect(() => {
     let isMounted = true;
 
@@ -48,7 +60,10 @@ export const TrainerPage = () => {
       if (mode === "quote") {
         try {
           const category = (quoteLength as QuoteLengthCategory) || "all";
-          const quote = await getRandomQuote(language, category);
+          const quote = await getRandomQuote(
+            selectedLanguage.baseLang,
+            category,
+          );
 
           if (isMounted) {
             setCurrentQuote(quote);
@@ -56,19 +71,26 @@ export const TrainerPage = () => {
             setSessionKey((prev) => prev + 1);
           }
         } catch (error) {
-          console.error("Ошибка при подгрузке цитаты:", error);
+          console.error("Ошибка загрузки цитаты:", error);
         }
       } else {
         setCurrentQuote(null);
-        const initialCount = isInfinite
-          ? 50
-          : mode === "time"
-            ? Math.max(150, timeLimitNumber * 4)
-            : wordsCountNumber;
 
-        const generated = generateText(language, initialCount);
+        //  Подгрузка слова из JSON файла через loadLanguageWords
+        const wordsPool = await loadLanguageWords(selectedLanguage.fileName);
+
         if (isMounted) {
-          setText(generated);
+          setCurrentWordsPool(wordsPool);
+
+          const initialCount = isInfinite
+            ? 50
+            : mode === "time"
+              ? Math.max(150, timeLimitNumber * 4)
+              : wordsCountNumber;
+
+          // Генерирация случайного текста из загруженного пула слов
+          const generatedText = getRandomWordsFromPool(wordsPool, initialCount);
+          setText(generatedText);
           setSessionKey((prev) => prev + 1);
         }
       }
@@ -83,23 +105,22 @@ export const TrainerPage = () => {
     return () => {
       isMounted = false;
     };
-  }, [language, mode, wordsCount, timeSecond, quoteLength, isInfinite]);
+  }, [selectedLanguage, mode, wordsCount, timeSecond, quoteLength, isInfinite]);
 
-  // Дозагрузка слов для бесконечного режима
+  // Дозагрузка слов при бесконечном режиме
   const handleLoadMoreWords = useCallback(() => {
-    if (mode === "words" && isInfinite) {
-      setText((prevText) => `${prevText} ${generateText(language, 30)}`);
+    if (mode === "words" && isInfinite && currentWordsPool.length > 0) {
+      const newWords = getRandomWordsFromPool(currentWordsPool, 30);
+      setText((prev) => `${prev} ${newWords}`);
     }
-  }, [language, mode, isInfinite]);
+  }, [mode, isInfinite, currentWordsPool]);
 
   const handleValueChange = (val: OptionValue): void => {
     if (mode === "time") setTimeSecond(val);
     else if (mode === "words") setWordsCount(val);
     else if (mode === "quote") setQuoteLength(val);
   };
-  const handleLanguageTypingOpen = () => {
-    setIsModalChangeTypingLanguage(!isModalChangeTypingLanguage);
-  };
+
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
@@ -112,21 +133,33 @@ export const TrainerPage = () => {
       </div>
 
       <div className={styles.typingWrapper}>
-        {isModalChangeTypingLanguage && <ChangeLanguageTypingModal />}
-        <div className={styles.language} title="выбрать язык печати">
-          <button onClick={() => handleLanguageTypingOpen()}>
+        {isModalChangeTypingLanguage && (
+          <ChangeLanguageTypingModal
+            selectedId={selectedLanguage.id}
+            onClose={() => setIsModalChangeTypingLanguage(false)}
+            onSelectLanguage={(langConfig) => setSelectedLanguage(langConfig)}
+          />
+        )}
+
+        <div className={styles.language} title="Выбрать язык печати">
+          <button onClick={() => setIsModalChangeTypingLanguage(true)}>
             {translateIcon}
-            {language}
+            <span>{selectedLanguage.label}</span>
           </button>
         </div>
-        <TypingBox
-          key={sessionKey}
-          text={text}
-          selectedMode={mode === "time" ? "time" : "words"}
-          timeLimit={timeLimitNumber}
-          isInfinite={isInfinite}
-          onLoadMore={handleLoadMoreWords}
-        />
+
+        {isLoading ? (
+          <div className={styles.loading}>Загрузка словаря...</div>
+        ) : (
+          <TypingBox
+            key={sessionKey}
+            text={text}
+            selectedMode={mode === "time" ? "time" : "words"}
+            timeLimit={timeLimitNumber}
+            isInfinite={isInfinite}
+            onLoadMore={handleLoadMoreWords}
+          />
+        )}
 
         {mode === "quote" && currentQuote && !isLoading && (
           <div className={styles.quoteSource}>— {currentQuote.source}</div>

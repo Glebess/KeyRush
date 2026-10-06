@@ -1,19 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./ChangeLanguageTypingModal.module.css";
 import { CONFIG_LANGUAGE } from "@/shared/assets/language/CONFIG_LANGUAGE";
+import type { ChangeLanguageTypingModalProps } from "../../model/types";
 
-export const ChangeLanguageTypingModal = () => {
+export const ChangeLanguageTypingModal = ({
+  selectedId,
+  onClose,
+  onSelectLanguage,
+}: ChangeLanguageTypingModalProps) => {
   const [search, setSearch] = useState("");
   const searchLanguageInputRef = useRef<HTMLInputElement>(null);
   const filterLanguage = CONFIG_LANGUAGE.filter((item) =>
     item.label.toLowerCase().includes(search.toLowerCase()),
   );
+
   useEffect(() => {
     searchLanguageInputRef.current?.focus();
-  });
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className={styles.overlay} onClick={onClose}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.search_container}>
           <div className={styles.svg_container}>
             <svg
@@ -38,7 +51,14 @@ export const ChangeLanguageTypingModal = () => {
         <div className={styles.languages_list_container}>
           {filterLanguage.map((item) => (
             <div key={item.label} className={styles.language_container}>
-              <button>{item.label}</button>
+              <button
+                onClick={() => {
+                  onSelectLanguage(item);
+                  onClose();
+                }}
+              >
+                {item.label}
+              </button>
             </div>
           ))}
         </div>
