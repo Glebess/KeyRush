@@ -51,9 +51,13 @@
 .form h5 {
   color: white;
 }
-.form span {
-  color: black;
-  background-color: rgb(88, 88, 88);
+.span_info {
+  color: #888;
+}
+
+.span_keyboard_help {
+  color: #2196f3;
+  background-color: #131313;
   border-radius: 2.5px;
   padding: 0px 5px;
 }

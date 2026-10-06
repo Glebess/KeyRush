@@ -19,6 +19,7 @@ export const TypingBox = ({
     wordStatuses,
     isCurrentWordHasError,
     timeLeft,
+    isStarted,
   } = useTypingEngine(text, { mode: selectedMode, timeLimit });
 
   const boxRef = useRef<HTMLDivElement>(null);
@@ -55,13 +56,15 @@ export const TypingBox = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.statsBar}>
-        <span>
-          {selectedMode === "words"
-            ? isInfinite
-              ? `${currentWordIndex} / ∞`
-              : `${currentWordIndex} / ${totalWords}`
-            : `${timeLeft}s`}
-        </span>
+        {isStarted && (
+          <span>
+            {selectedMode === "words"
+              ? isInfinite
+                ? `${currentWordIndex} / ∞`
+                : `${currentWordIndex} / ${totalWords}`
+              : `${timeLeft}s`}
+          </span>
+        )}
       </div>
 
       <div ref={boxRef} className={styles.box}>

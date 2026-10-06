@@ -12,6 +12,8 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
   const [inputValue, setInputValue] = useState<string>(String(0));
   const inputRef = useRef<HTMLInputElement>(null);
   const parse = parseInt(inputValue, 10);
+  const min = 0;
+  const max = mode === "words" ? 100000 : 86400;
 
   //Фокус на инпуте при открытии
   useEffect(() => {
@@ -20,8 +22,6 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const min = 0;
-    const max = mode === "words" ? 1000 : 7200;
 
     if (!isNaN(parse) && parse >= min && parse <= max) {
       onSubmit(parse);
@@ -59,8 +59,15 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
           />
 
           <h5>
+            <span className={styles.span_info}>
+              Максимальное значение {max} {mode === "words" ? "слов." : "s."}
+            </span>
+            <br />
             Чтобы начать бесконеный тест,введите 0.Чтобы завершить бесконечный
-            тест нажмите <span>esc</span> или кнопку прервать.
+            тест нажмите <span className={styles.span_keyboard_help}>
+              esc
+            </span>{" "}
+            или кнопку прервать.
           </h5>
 
           <button disabled={parse < 0} type="submit">

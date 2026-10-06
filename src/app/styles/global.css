@@ -32,9 +32,9 @@
       sans-serif;
   }
 }
-::selection {
+/* ::selection {
   background-color: #af79f1;
-}
+} */
 
 * {
   box-sizing: border-box;
