@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 80%;
+  position: static;
 }
 .box {
   font-family: monospace;

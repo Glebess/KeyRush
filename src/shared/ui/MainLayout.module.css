@@ -14,7 +14,6 @@
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-color, #313244);
 }
 
 .logo {
@@ -22,13 +21,24 @@
   font-weight: bold;
   user-select: none;
   -webkit-text-stroke: 0.25px var(--border-color);
+  display: flex;
 }
 
-.logoCorrect {
+.logo span:nth-child(odd) {
   color: var(--color-correct, #4caf50);
 }
-.logoIncorrect {
+.logo span:nth-child(even) {
   color: var(--color-incorrect, #f44336);
+}
+.logo span:last-child {
+  color: #888;
+}
+.line {
+  border: 1px solid #2196f3;
+  animation: blink;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  transition: 0.3s ease;
 }
 
 .main {
@@ -38,7 +48,7 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  border: 1px solid var(--border-color);
+
   box-sizing: border-box;
   margin: 10px 20px;
   border-radius: 20px;

@@ -5,7 +5,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 32px;
 }
 .topBar {
   width: 100%;
@@ -18,7 +17,7 @@
   flex: 1;
   width: 100%;
   display: flex;
-  justify-content: center;
+  margin-top: 12vh;
   align-items: center;
   flex-direction: column;
 }

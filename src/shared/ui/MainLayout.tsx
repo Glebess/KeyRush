@@ -4,14 +4,17 @@ import styles from "./MainLayout.module.css";
 interface MainLayoutProps {
   children: React.ReactNode;
 }
-
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
         <div className={styles.logo}>
-          <span className={styles.logoCorrect}>Key</span>
-          <span className={styles.logoIncorrect}>Rush</span>
+          <span>K</span>
+          <span>ey</span>
+          <span>R</span>
+          <span>u</span>
+          <div className={styles.line}></div>
+          <span>sh</span>
         </div>
       </header>
 

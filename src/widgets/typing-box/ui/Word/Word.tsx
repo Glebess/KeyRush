@@ -26,7 +26,6 @@ export const Word = memo(
     let wordClass = styles.word;
 
     if (isActive) {
-      wordClass += ` ${styles.active}`;
       if (hasError) wordClass += ` ${styles.hasError}`;
     } else if (isIncorrect) {
       wordClass += ` ${styles.wordIncorrect}`;
