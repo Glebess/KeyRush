@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./MainLayout.module.css";
-
+// import { infoIcon } from "../assets/svg/TrainerPageSvg";
 interface MainLayoutProps {
   children: React.ReactNode;
 }
@@ -16,6 +16,10 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           <div className={styles.line}></div>
           <span>sh</span>
         </div>
+
+        {/* <div className={styles.container_nav}>
+          <nav className={styles.nav}>{infoIcon}</nav>
+        </div> */}
       </header>
 
       <main className={styles.main}>{children}</main>

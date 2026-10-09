@@ -5,7 +5,7 @@ import styles from "../TypingBox.module.css";
 
 interface WordProps {
   chars: TypedCharacter[];
-  spaceChar?: TypedCharacter; // 👈 Передаем пробел отдельно
+  spaceChar?: TypedCharacter;
   isActive: boolean;
   hasError: boolean;
   isIncorrect: boolean;

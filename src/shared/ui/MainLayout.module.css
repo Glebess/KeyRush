@@ -13,11 +13,11 @@
 .header {
   padding: 20px 40px;
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   user-select: none;
   -webkit-text-stroke: 0.25px var(--border-color);
@@ -40,7 +40,21 @@
   animation-iteration-count: infinite;
   transition: 0.3s ease;
 }
-
+.container_nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 25px;
+}
+.nav svg {
+  height: 100%;
+  width: 100%;
+}
 .main {
   flex: 1;
   display: flex;

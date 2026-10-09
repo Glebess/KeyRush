@@ -1,4 +1,3 @@
-// src/entities/session/lib/useTypingEngine.ts
 import { useTypingInput } from "./useTypingInput";
 import { useWordDerivedState } from "./useWordDerivedState";
 import { useTypingStats } from "./useTypingStats";
@@ -31,7 +30,15 @@ export const useTypingEngine = (
   const { words, currentWordIndex, wordStatuses, isCurrentWordHasError } =
     useWordDerivedState(targetText, currentIndex, charStates);
 
-  const stats = useTypingStats(charStates, totalMisses);
+  const { stats, history } = useTypingStats({
+    charStates,
+    totalMisses,
+    isStarted,
+    isEnded,
+    mode,
+    timeLimit,
+    timeLeft,
+  });
 
   return {
     charStates,
@@ -43,6 +50,7 @@ export const useTypingEngine = (
     wordStatuses,
     isCurrentWordHasError,
     stats,
+    history,
     timeLeft,
     mode,
   };

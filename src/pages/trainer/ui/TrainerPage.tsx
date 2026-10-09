@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { TypingBox } from "@/widgets/typing-box";
+import { ResultScreen } from "@/widgets/result-screen/ui/ResultScreen";
 import {
   loadLanguageWords,
   getRandomWordsFromPool,
@@ -8,6 +9,7 @@ import { translateIcon } from "@/shared/assets/svg/TrainerPageSvg";
 import { ChangeLanguageTypingModal } from "./ChangeLanguageTypingModal/ChangeLanguageTypingModal";
 import { CONFIG_LANGUAGE } from "@/shared/assets/language/CONFIG_LANGUAGE";
 import type { LanguageConfig } from "@/shared/assets/language/CONFIG_LANGUAGE";
+import type { TypingStats, SecondSnapshot } from "@/entities/session";
 import {
   getRandomQuote,
   type Quote,
@@ -30,6 +32,11 @@ export const TrainerPage = () => {
     },
   );
 
+  const [completedStats, setCompletedStats] = useState<{
+    stats: TypingStats;
+    history: SecondSnapshot[];
+  } | null>(null);
+
   const [wordsCount, setWordsCount] = useState<OptionValue>(25);
   const [timeSecond, setTimeSecond] = useState<OptionValue>(30);
   const [quoteLength, setQuoteLength] = useState<OptionValue>("all");
@@ -51,11 +58,24 @@ export const TrainerPage = () => {
   const timeLimitNumber = Number(timeSecond) || 0;
   const wordsCountNumber = Number(wordsCount) || 0;
 
+  const handleComplete = useCallback(
+    (stats: TypingStats, history: SecondSnapshot[]) => {
+      setCompletedStats({ stats, history });
+    },
+    [],
+  );
+
+  const handleRestart = useCallback(() => {
+    setCompletedStats(null);
+    setSessionKey((prev) => prev + 1);
+  }, []);
+
   useEffect(() => {
     let isMounted = true;
 
     const loadSessionData = async () => {
       setIsLoading(true);
+      setCompletedStats(null);
 
       if (mode === "quote") {
         try {
@@ -76,7 +96,6 @@ export const TrainerPage = () => {
       } else {
         setCurrentQuote(null);
 
-        //  Подгрузка слова из JSON файла через loadLanguageWords
         const wordsPool = await loadLanguageWords(selectedLanguage.fileName);
 
         if (isMounted) {
@@ -88,7 +107,6 @@ export const TrainerPage = () => {
               ? Math.max(150, timeLimitNumber * 4)
               : wordsCountNumber;
 
-          // Генерирация случайного текста из загруженного пула слов
           const generatedText = getRandomWordsFromPool(wordsPool, initialCount);
           setText(generatedText);
           setSessionKey((prev) => prev + 1);
@@ -107,7 +125,6 @@ export const TrainerPage = () => {
     };
   }, [selectedLanguage, mode, wordsCount, timeSecond, quoteLength, isInfinite]);
 
-  // Дозагрузка слов при бесконечном режиме
   const handleLoadMoreWords = useCallback(() => {
     if (mode === "words" && isInfinite && currentWordsPool.length > 0) {
       const newWords = getRandomWordsFromPool(currentWordsPool, 30);
@@ -148,7 +165,13 @@ export const TrainerPage = () => {
           </button>
         </div>
 
-        {isLoading ? (
+        {completedStats ? (
+          <ResultScreen
+            stats={completedStats.stats}
+            history={completedStats.history}
+            onRestart={handleRestart}
+          />
+        ) : isLoading ? (
           <div className={styles.loading}>Загрузка словаря...</div>
         ) : (
           <TypingBox
@@ -158,10 +181,11 @@ export const TrainerPage = () => {
             timeLimit={timeLimitNumber}
             isInfinite={isInfinite}
             onLoadMore={handleLoadMoreWords}
+            onComplete={handleComplete}
           />
         )}
 
-        {mode === "quote" && currentQuote && !isLoading && (
+        {!completedStats && mode === "quote" && currentQuote && !isLoading && (
           <div className={styles.quoteSource}>— {currentQuote.source}</div>
         )}
       </div>

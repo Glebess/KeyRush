@@ -35,3 +35,9 @@ export interface TypingEngineOptions {
   mode?: TypingMode;
   timeLimit?: number;
 }
+export interface TypingStats {
+  wpm: number;
+  rawWpm: number;
+  accuracy: number;
+  cpm: number;
+}

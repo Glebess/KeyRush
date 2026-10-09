@@ -3,12 +3,14 @@ import { useTypingEngine } from "@/entities/session";
 import { Word } from "./Word/Word";
 import type { TypingBoxProps } from "../model/types";
 import styles from "./TypingBox.module.css";
+
 export const TypingBox = ({
   text,
   selectedMode,
   timeLimit,
   isInfinite = false,
   onLoadMore,
+  onComplete,
 }: TypingBoxProps) => {
   const {
     words,
@@ -19,12 +21,22 @@ export const TypingBox = ({
     isCurrentWordHasError,
     timeLeft,
     isStarted,
+    isEnded,
+    stats,
+    history,
   } = useTypingEngine(text, { mode: selectedMode, timeLimit });
 
   const boxRef = useRef<HTMLDivElement>(null);
   const totalWords = words.length;
 
-  // Автоматическая подгрузка новых слов (только в бесконечном режиме)
+  // Отправка итоговой статистики при завершении теста
+  useEffect(() => {
+    if (isEnded && onComplete) {
+      onComplete(stats, history);
+    }
+  }, [isEnded, stats, history, onComplete]);
+
+  // Автоматическая подгрузка новых слов (в бесконечном режиме)
   useEffect(() => {
     if (!isInfinite || !onLoadMore) return;
 
@@ -33,7 +45,7 @@ export const TypingBox = ({
     }
   }, [currentWordIndex, totalWords, isInfinite, onLoadMore]);
 
-  // Автоматический скролл — держит активную строку посередине
+  // Автоматический скролл
   useEffect(() => {
     if (!boxRef.current) return;
 
