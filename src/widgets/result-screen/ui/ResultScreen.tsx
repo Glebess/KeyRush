@@ -28,7 +28,6 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
         onRestart();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onRestart]);
@@ -49,11 +48,11 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
         <div className={styles.subStats}>
           <div className={styles.statGroup}>
             <span className={styles.subLabel}>raw wpm</span>
-            <span className={styles.subValue}>{stats.rawWpm}</span>
+            <span className={styles.subValue}> {stats.rawWpm}</span>
           </div>
           <div className={styles.statGroup}>
             <span className={styles.subLabel}>cpm</span>
-            <span className={styles.subValue}>{stats.cpm}</span>
+            <span className={styles.subValue}> {stats.cpm}</span>
           </div>
         </div>
       </div>
@@ -98,7 +97,7 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.restartBtn} onClick={onRestart} autoFocus>
+        <button className={styles.restartBtn} onClick={onRestart}>
           Новый тест (Enter)
         </button>
       </div>
