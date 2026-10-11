@@ -32,22 +32,48 @@
   flex-direction: column;
   gap: 16px;
 }
-.form input {
+.input_container {
+  display: flex;
+  position: relative;
+}
+.input_container input {
   background-color: #131313;
+  width: 100%;
   padding: 10px;
   outline: 0;
   border: 0;
   border-radius: 10px;
   color: white;
 }
-.form input::-webkit-outer-spin-button,
-.form ::-webkit-inner-spin-button {
+.input_container input::-webkit-outer-spin-button,
+.input_container ::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
 .input[type="number"] {
   -moz-appearance: textfield;
 }
+.svg_container {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+.svg_container svg {
+  width: 20px;
+  height: 20px;
+}
+.errorIcon {
+  color: #ca4754;
+}
+.successIcon {
+  color: #2ecc71;
+}
+
 .form h5 {
   color: white;
 }
