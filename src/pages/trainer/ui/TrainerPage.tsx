@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { TypingBox } from "@/widgets/typing-box";
 import { ResultScreen } from "@/widgets/result-screen/ui/ResultScreen";
+import { MobileModeSelectorTrainer } from "@/features/change-mode";
 import {
   loadLanguageWords,
   getRandomWordsFromPool,
@@ -50,6 +51,9 @@ export const TrainerPage = () => {
   const [text, setText] = useState<string>("");
   const [sessionKey, setSessionKey] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [isModileSettingsOpen, setIsModileSettingsOpen] =
+    useState<boolean>(false);
 
   const activeValue =
     mode === "words" ? wordsCount : mode === "time" ? timeSecond : quoteLength;
@@ -140,7 +144,7 @@ export const TrainerPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.topBar}>
+      <div className={styles.desktopTopBar}>
         <ModeSelectorKeyboardTrainer
           mode={mode}
           onModeChange={setMode}
@@ -148,6 +152,25 @@ export const TrainerPage = () => {
           selectedValue={activeValue}
         />
       </div>
+
+      <div className={styles.mobileSettingsBar}>
+        <button
+          className={styles.settingsButton}
+          onClick={() => setIsModileSettingsOpen(true)}
+        >
+          ⚙️ Настройки теста
+        </button>
+      </div>
+
+      {isModileSettingsOpen && (
+        <MobileModeSelectorTrainer
+          mode={mode}
+          onModeChange={setMode}
+          onValueChange={handleValueChange}
+          selectedValue={activeValue}
+          onClose={() => setIsModileSettingsOpen(false)}
+        />
+      )}
 
       <div className={styles.typingWrapper}>
         {isModalChangeTypingLanguage && (

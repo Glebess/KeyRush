@@ -18,7 +18,6 @@
   border: 5px solid var(--modal-br);
   padding: 50px;
   max-width: 500px;
-
   border-radius: 20px;
   gap: 10px;
 }
@@ -104,4 +103,10 @@
   background-color: #1c1d1f;
   color: gray;
   cursor: not-allowed;
+}
+@media (max-width: 400px) {
+  .modal {
+    padding: 20px;
+    width: 95%;
+  }
 }

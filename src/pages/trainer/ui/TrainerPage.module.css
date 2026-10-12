@@ -6,12 +6,24 @@
   justify-content: center;
   align-items: center;
 }
-.topBar {
+.desktopTopBar {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-top: 16px;
+  padding-top: 2%;
   margin-bottom: auto;
+}
+.mobileSettingsBar {
+  width: 100%;
+  display: none;
+  justify-content: center;
+  padding-top: 2%;
+  margin-bottom: auto;
+}
+.settingsButton {
+  background-color: transparent;
+  border: 0;
+  color: #575656;
 }
 .typingWrapper {
   flex: 1;
@@ -44,4 +56,12 @@
 .language button:hover {
   color: white;
   cursor: pointer;
+}
+@media (max-width: 645px) {
+  .desktopTopBar {
+    display: none;
+  }
+  .mobileSettingsBar {
+    display: flex;
+  }
 }
