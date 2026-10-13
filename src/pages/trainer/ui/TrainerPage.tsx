@@ -158,7 +158,7 @@ export const TrainerPage = () => {
           className={styles.settingsButton}
           onClick={() => setIsModileSettingsOpen(true)}
         >
-          ⚙️ Настройки теста
+          Настройки теста
         </button>
       </div>
 

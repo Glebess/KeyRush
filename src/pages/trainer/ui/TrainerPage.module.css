@@ -24,6 +24,7 @@
   background-color: transparent;
   border: 0;
   color: #575656;
+  font-size: 20px;
 }
 .typingWrapper {
   flex: 1;
@@ -63,5 +64,8 @@
   }
   .mobileSettingsBar {
     display: flex;
+  }
+  .typingWrapper {
+    margin-top: 10%;
   }
 }

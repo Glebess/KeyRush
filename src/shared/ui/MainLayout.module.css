@@ -75,3 +75,12 @@
   color: var(--text-muted, #6c7086);
   font-size: 0.9rem;
 }
+@media (max-width: 645px) {
+  .header {
+    padding: 10px 10px;
+  }
+  .main {
+    margin: 0;
+    padding: 10px;
+  }
+}
