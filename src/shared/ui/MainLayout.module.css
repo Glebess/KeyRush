@@ -43,17 +43,25 @@
 .container_nav {
   display: flex;
   align-items: center;
-  height: 100%;
+  width: 100%;
 }
-.nav {
-  display: flex;
+.nav_button {
+  height: 100%;
+  width: 35px;
+  background-color: transparent;
+  border: 0;
   align-items: center;
   justify-content: center;
-  min-width: 25px;
+  margin-left: auto;
 }
-.nav svg {
+.nav_button svg {
+  width: 30px;
   height: 100%;
-  width: 100%;
+  color: #575656;
+}
+.nav_button svg:hover {
+  color: white;
+  cursor: pointer;
 }
 .main {
   flex: 1;
@@ -62,13 +70,11 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-
   box-sizing: border-box;
   margin: 10px 20px;
   border-radius: 20px;
   height: 100%;
 }
-
 .footer {
   padding: 20px;
   text-align: center;
