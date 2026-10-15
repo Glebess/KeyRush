@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./MainLayout.module.css";
+import { useNavigate } from "react-router-dom";
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 export const MainLayout = ({ children }: MainLayoutProps) => {
+  const navigateToLogin = useNavigate();
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
@@ -17,7 +19,11 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         </div>
 
         <nav className={styles.container_nav}>
-          <button title="аккаунт" className={styles.nav_button}>
+          <button
+            title="аккаунт"
+            className={styles.nav_button}
+            onClick={() => navigateToLogin("/login")}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

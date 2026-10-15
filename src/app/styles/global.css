@@ -6,7 +6,7 @@
 
   /* Цвета текста */
   --text-primary: #cdd6f4;
-  --text-muted: #6c7086;
+  --text-muted: #353434;
   --text-modal: var(--text-muted);
 
   /* Акцентные цвета для тренажера */

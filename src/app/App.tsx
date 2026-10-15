@@ -5,14 +5,14 @@ import { LoginPage } from "@/pages/login";
 import { RegisterPage } from "@/pages/register";
 export default function App() {
   return (
-    <MainLayout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <MainLayout>
         <Routes>
           <Route path="/" element={<TrainerPage />}></Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
-      </BrowserRouter>
-    </MainLayout>
+      </MainLayout>
+    </BrowserRouter>
   );
 }
