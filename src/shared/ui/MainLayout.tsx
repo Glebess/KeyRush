@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./MainLayout.module.css";
-// import { infoIcon } from "../assets/svg/TrainerPageSvg";
 interface MainLayoutProps {
   children: React.ReactNode;
 }
