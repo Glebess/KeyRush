@@ -23,8 +23,8 @@
 }
 .login_form button {
   padding: 10px;
-  background-color: #030303;
-  color: var(--text-muted);
+  background-color: var(--modal-br);
+  color: var(--text-primary);
   border: 0;
   border-radius: 10px;
 }
@@ -37,9 +37,13 @@
   text-align: center;
 }
 .login_form a {
-  color: #9b9797fa;
+  color: var(--text-primary);
   text-decoration: none;
 }
 .login_form a:hover {
   color: white;
+}
+.login_form button:disabled {
+  background-color: #272727;
+  cursor: not-allowed;
 }

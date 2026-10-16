@@ -5,11 +5,11 @@ interface MainLayoutProps {
   children: React.ReactNode;
 }
 export const MainLayout = ({ children }: MainLayoutProps) => {
-  const navigateToLogin = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
-        <div className={styles.logo}>
+        <div className={styles.logo} onClick={() => navigate("/")}>
           <span>K</span>
           <span>ey</span>
           <span>R</span>
@@ -22,7 +22,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           <button
             title="аккаунт"
             className={styles.nav_button}
-            onClick={() => navigateToLogin("/login")}
+            onClick={() => navigate("/login")}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -8,6 +8,10 @@ export const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // const validationForm = () => {
+  //   if(userName )
+  // }
+
   return (
     <div className={styles.container}>
       <form className={styles.login_form}>
@@ -25,9 +29,10 @@ export const LoginPage = () => {
           placeholder="пароль"
           type="password"
           required
-          minLength={8}
         />
-        <button type="submit">Войти</button>
+        <button type="submit" disabled>
+          Войти
+        </button>
         <p>
           Нет аккаунта? <Link to={"/register"}>Зарегистрироваться</Link>
         </p>

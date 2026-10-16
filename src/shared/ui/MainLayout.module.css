@@ -23,7 +23,9 @@
   -webkit-text-stroke: 0.25px var(--border-color);
   display: flex;
 }
-
+.logo:hover {
+  cursor: pointer;
+}
 .logo span:nth-child(odd) {
   color: var(--color-correct, #4caf50);
 }
