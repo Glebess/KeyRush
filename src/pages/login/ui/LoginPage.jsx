@@ -8,13 +8,20 @@ export const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // const validationForm = () => {
-  //   if(userName )
-  // }
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
+    setError("");
+    try {
+      console.log("успешный вход!");
+      navigate("/");
+    } catch (err) {
+      setError("Ошибка входа.Проверте данные");
+    }
+  };
   return (
     <div className={styles.container}>
-      <form className={styles.login_form}>
+      <form className={styles.login_form} onSubmit={handleLogin}>
         <h3>Вход в аккаунт</h3>
         <input
           onChange={(e) => setUserName(e.target.value)}
@@ -30,9 +37,7 @@ export const LoginPage = () => {
           type="password"
           required
         />
-        <button type="submit" disabled>
-          Войти
-        </button>
+        <button type="submit">Войти</button>
         <p>
           Нет аккаунта? <Link to={"/register"}>Зарегистрироваться</Link>
         </p>
