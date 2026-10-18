@@ -1,8 +1,9 @@
 import styles from "./RegisterPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 export const RegisterPage = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -11,19 +12,32 @@ export const RegisterPage = () => {
     e.preventDefault();
     setError("");
     try {
-      console.log("Успешная регистрация");
-      navigate("/");
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Ошибка регистрации");
+      }
+      navigate("/login");
     } catch (err) {
-      setError("Ошибка входа.Проверте данные");
+      setError(err.message || "Ошибка регистрации");
     }
   };
+
   return (
     <div className={styles.container}>
       <form className={styles.login_form} onSubmit={handleRegister}>
         <h3>Регистрация аккаунта</h3>
+
+        {error && <div className={styles.error}>{error}</div>}
+
         <input
-          onChange={(e) => setUserName(e.target.value)}
-          value={userName}
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
           placeholder="имя пользователя"
           type="text"
           required

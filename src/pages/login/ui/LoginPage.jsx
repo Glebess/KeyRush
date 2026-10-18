@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 export const LoginPage = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -13,7 +13,18 @@ export const LoginPage = () => {
 
     setError("");
     try {
-      console.log("успешный вход!");
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Ошибка входа");
+      }
+      localStorage.setItem("user", JSON.stringify(data.user));
+
       navigate("/");
     } catch (err) {
       setError("Ошибка входа.Проверте данные");
@@ -25,7 +36,7 @@ export const LoginPage = () => {
         <h3>Вход в аккаунт</h3>
         <input
           onChange={(e) => setUserName(e.target.value)}
-          value={userName}
+          value={username}
           placeholder="имя пользователя"
           type="text"
           required
@@ -37,7 +48,7 @@ export const LoginPage = () => {
           type="password"
           required
         />
-        <button type="submit">Войти</button>
+        <button type="sumbit">Войти</button>
         <p>
           Нет аккаунта? <Link to={"/register"}>Зарегистрироваться</Link>
         </p>
