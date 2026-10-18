@@ -24,12 +24,12 @@ export const LoginPage = () => {
         throw new Error(data.error || "Ошибка входа");
       }
       localStorage.setItem("user", JSON.stringify(data.user));
-
       navigate("/");
     } catch (err) {
       setError("Ошибка входа.Проверте данные");
     }
   };
+
   return (
     <div className={styles.container}>
       <form className={styles.login_form} onSubmit={handleLogin}>
