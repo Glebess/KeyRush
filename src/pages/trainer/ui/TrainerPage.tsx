@@ -63,8 +63,31 @@ export const TrainerPage = () => {
   const wordsCountNumber = Number(wordsCount) || 0;
 
   const handleComplete = useCallback(
-    (stats: TypingStats, history: SecondSnapshot[]) => {
+    async (stats: TypingStats, history: SecondSnapshot[]) => {
       setCompletedStats({ stats, history });
+
+      const savedUser = localStorage.getItem("user");
+
+      if (!savedUser) {
+        console.log("Пользователь не авторизован, результат не сохранен в БД");
+        return;
+      }
+      const user = JSON.parse(savedUser);
+
+      try {
+        await fetch("http://localhost:5000/api/results", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user.id,
+            wpm: Math.round(stats.wpm),
+            accuracy: Math.round(stats.accuracy),
+          }),
+        });
+        console.log("Результат сохранен в Бд");
+      } catch (err) {
+        console.error("Ошибка сохранения результат", err);
+      }
     },
     [],
   );

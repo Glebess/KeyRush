@@ -102,6 +102,57 @@ app.post("/api/login", (req, res) => {
   });
 });
 
+app.get("/api/user/:id", (req, res) => {
+  const userId = req.params.id;
+  db.get(
+    `SELECT id, username FROM users WHERE id = ?`,
+    [userId],
+    (err, user) => {
+      if (err || !user) {
+        return res.status(404).json({ error: "Пользователь не найден" });
+      }
+      db.get(
+        `SELECT COUNT(*) as totalTests, SUM(wpm) as totalWpm FROM results WHERE user_id = ?`,
+        [userId],
+        (err, stats) => {
+          if (err) {
+            stats = { totalTests: 0, totalWpm: 0 };
+          }
+
+          res.json({
+            username: user.username,
+            totalTests: stats.totalTests || 0,
+            completedTests: stats.totalTests || 0, // или своя логика
+            typingTime: Math.round((stats.totalWpm || 0) / 2), // пример расчета времени
+          });
+        },
+      );
+    },
+  );
+});
+app.post("/api/results", (req, res) => {
+  const { userId, wpm, accuracy } = req.body;
+
+  if (!userId || wpm === undefined || accuracy === undefined) {
+    return res
+      .status(400)
+      .json({ error: "Недостаточно данных для сохранения результата" });
+  }
+
+  const date = new Date().toISOString();
+  const query = `INSERT INTO results (user_id, wpm, accuracy, date) VALUES (?, ?, ?, ?)`;
+
+  db.run(query, [userId, wpm, accuracy, date], function (err) {
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Ошибка сохранения результата в базу данных" });
+    }
+    res
+      .status(201)
+      .json({ message: "Результат сохранен", resultId: this.lastID });
+  });
+});
 app.listen(PORT, () => {
   console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

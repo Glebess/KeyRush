@@ -6,6 +6,7 @@ interface MainLayoutProps {
 }
 export const MainLayout = ({ children }: MainLayoutProps) => {
   const navigate = useNavigate();
+  const savedUser = localStorage.getItem("user");
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
@@ -22,7 +23,9 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           <button
             title="аккаунт"
             className={styles.nav_button}
-            onClick={() => navigate("/login")}
+            onClick={() =>
+              savedUser ? navigate("/profile") : navigate("/login")
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
