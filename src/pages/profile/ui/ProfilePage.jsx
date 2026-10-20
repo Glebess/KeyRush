@@ -23,6 +23,14 @@ export const ProfilePage = () => {
             <p>Всего тестов</p>
             <p>N/A</p>
           </div>
+          <div className={styles.test_count}>
+            <p>Тестов закончено</p>
+            <p>N/A</p>
+          </div>
+          <div className={styles.test_count}>
+            <p>Время печати</p>
+            <p>N/A</p>
+          </div>
         </div>
       </div>
     </div>

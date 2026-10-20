@@ -8,6 +8,7 @@
   /* Цвета текста */
   --text-primary: #757272;
   --text-muted: #3f3f3f;
+  --text-white: #cccccc;
 
   /* Акцентные цвета для тренажера */
   --color-correct: #4caf50;

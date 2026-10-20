@@ -47,7 +47,7 @@
   width: 100%;
 }
 .nickName {
-  color: white;
+  color: var(--text-white);
 }
 .data_join {
   font-size: 11px;
@@ -61,7 +61,8 @@
 .container_test_count {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  width: 75%;
 }
 .test_count {
   display: flex;
@@ -72,4 +73,5 @@
 }
 .test_count p:last-child {
   font-size: 24px;
+  color: var(--text-white);
 }
