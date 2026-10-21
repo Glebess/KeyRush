@@ -9,7 +9,7 @@ const PORT = 5000;
 app.use(express.json());
 app.use(cors());
 
-// Инициализация базы данных SQLite
+// Инициализация базы данных
 const db = new sqlite3.Database("./database.sqlite", (err) => {
   if (err) {
     console.error("Ошибка подключения к SQLite:", err.message);
@@ -105,18 +105,19 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-app.get("/api/user/:id", (req, res) => {
-  const userId = req.params.id;
+app.get("/api/user/:username", (req, res) => {
+  const username = req.params.username;
+
   db.get(
-    `SELECT id, username, created_at FROM users WHERE id = ?`,
-    [userId],
+    `SELECT id, username, created_at FROM users WHERE username = ?`,
+    [username],
     (err, user) => {
       if (err || !user) {
         return res.status(404).json({ error: "Пользователь не найден" });
       }
       db.get(
         `SELECT COUNT(*) as totalTests, SUM(wpm) as totalWpm FROM results WHERE user_id = ?`,
-        [userId],
+        [user.id],
         (err, stats) => {
           if (err) {
             stats = { totalTests: 0, totalWpm: 0 };
