@@ -47,7 +47,7 @@ export const LoginPage = () => {
           type="password"
           required
         />
-        <button type="sumbit">Войти</button>
+        <button type="submit">Войти</button>
         <p>
           Нет аккаунта? <Link to={"/register"}>Зарегистрироваться</Link>
         </p>

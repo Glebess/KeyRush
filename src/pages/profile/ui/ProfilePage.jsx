@@ -1,41 +1,87 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./ProfilePage.module.css";
 import avatar from "./images.jpg";
+
 export const ProfilePage = () => {
   const [profileData, setProfileData] = useState({
-    username: "Загрузка...",
+    username: "",
+    createdAt: null,
     totalTests: 0,
     completedTests: 0,
     typingTime: 0,
   });
 
+  const [isNotFound, setIsNotFound] = useState(false);
+  const [isNotLoggedIn, setIsNotLoggedIn] = useState(false);
+  const { username } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (!savedUser) return;
+    let targetUserName = username;
 
-    const user = JSON.parse(savedUser);
+    // Если в URL нет ID, берем из localStorage (для своего профиля)
+    if (!targetUserName) {
+      const savedUser = localStorage.getItem("user");
+      if (savedUser) {
+        try {
+          const user = JSON.parse(savedUser);
+          targetUserName = user.username;
+        } catch (e) {
+          console.error("Ошибка парсинга пользователя", e);
+        }
+      }
+    }
 
-    fetch(`http://localhost:5000/api/user/${user.id}`)
+    if (!targetUserName) {
+      navigate("/404");
+      return;
+    }
+
+    // Запрос к бэкенду по username пользователя
+    fetch(`http://localhost:5000/api/user/${targetUserName}`)
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
           setProfileData(data);
+        } else {
+          navigate("/404");
         }
       })
-      .catch((err) => console.log("Ошибка загрузки профиля:", err));
-  }, []);
-  const dataJoin = new Date(profileData.createdAt).toLocaleDateString("ru-Ru", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+      .catch((err) => {
+        console.log("Ошибка загрузки профиля:", err);
+        navigate("/404");
+      });
+  }, [username, navigate]);
+
+  // // Если пользователь не залогинен и зашел на /profile без ID
+  // if (isNotLoggedIn) {
+  //   return (
+  //     <div className={styles.container}>
+  //       <div className={styles.container_info}>
+  //         <p  }}>
+  //           Пожалуйста, войдите в систему.
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+  const dataJoin = profileData.createdAt
+    ? new Date(profileData.createdAt).toLocaleDateString("ru-RU", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    : "неизвестно";
+
   return (
     <div className={styles.container}>
       <div className={styles.container_info}>
         <div className={styles.container_mainInfo}>
           <div className={styles.container_avatar}>
             <div className={styles.avatar}>
-              <img src={avatar}></img>
+              <img src={avatar} alt="avatar" />
             </div>
           </div>
           <div className={styles.container_nickName}>
