@@ -22,7 +22,8 @@ db.run(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL
+    password_hash TEXT NOT NULL,
+    created_at TEXT
   )
 `);
 
@@ -49,8 +50,10 @@ app.post("/api/register", async (req, res) => {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
-    const query = `INSERT INTO users (username, password_hash) VALUES (?, ?)`;
-    db.run(query, [username, passwordHash], function (err) {
+    const createdAt = new Date().toISOString();
+
+    const query = `INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)`;
+    db.run(query, [username, passwordHash, createdAt], function (err) {
       if (err) {
         if (err.message.includes("UNIQUE constraint failed")) {
           return res
@@ -105,7 +108,7 @@ app.post("/api/login", (req, res) => {
 app.get("/api/user/:id", (req, res) => {
   const userId = req.params.id;
   db.get(
-    `SELECT id, username FROM users WHERE id = ?`,
+    `SELECT id, username, created_at FROM users WHERE id = ?`,
     [userId],
     (err, user) => {
       if (err || !user) {
@@ -121,9 +124,10 @@ app.get("/api/user/:id", (req, res) => {
 
           res.json({
             username: user.username,
+            createdAt: user.created_at,
             totalTests: stats.totalTests || 0,
-            completedTests: stats.totalTests || 0, // или своя логика
-            typingTime: Math.round((stats.totalWpm || 0) / 2), // пример расчета времени
+            completedTests: stats.totalTests || 0,
+            typingTime: Math.round((stats.totalWpm || 0) / 2),
           });
         },
       );

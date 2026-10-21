@@ -24,6 +24,11 @@ export const ProfilePage = () => {
       })
       .catch((err) => console.log("Ошибка загрузки профиля:", err));
   }, []);
+  const dataJoin = new Date(profileData.createdAt).toLocaleDateString("ru-Ru", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
   return (
     <div className={styles.container}>
       <div className={styles.container_info}>
@@ -35,7 +40,7 @@ export const ProfilePage = () => {
           </div>
           <div className={styles.container_nickName}>
             <p className={styles.nickName}>{profileData.username}</p>
-            <p className={styles.data_join}>KeyRush</p>
+            <p className={styles.data_join}>{`Зарегистрирован ${dataJoin}`}</p>
           </div>
         </div>
 
