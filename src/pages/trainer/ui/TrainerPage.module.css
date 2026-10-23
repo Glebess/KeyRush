@@ -38,25 +38,23 @@
   color: var(--text-muted);
   padding-top: 10px;
 }
-.language {
-  align-items: center;
+.container_restartTest {
   display: flex;
-  user-select: none;
-  width: 100%;
+  align-items: center;
   justify-content: center;
+  margin-top: 30px;
+  padding: 10px;
 }
-.language button {
-  color: #575656;
-  font-size: 24px;
-  align-items: center;
-  gap: 10px;
-  display: flex;
+.container_restartTest button {
   background-color: transparent;
   border: 0;
+  color: var(--text-muted);
 }
-.language button:hover {
+.container_restartTest button:hover {
   color: white;
   cursor: pointer;
+  transform: rotate(-360deg);
+  transition: 0.6s;
 }
 @media (max-width: 645px) {
   .desktopTopBar {

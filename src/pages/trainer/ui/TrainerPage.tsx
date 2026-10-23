@@ -6,8 +6,7 @@ import {
   loadLanguageWords,
   getRandomWordsFromPool,
 } from "@/entities/word-list";
-import { translateIcon } from "@/shared/assets/svg/TrainerPageSvg";
-import { ChangeLanguageTypingModal } from "./ChangeLanguageTypingModal/ChangeLanguageTypingModal";
+import { KeyboardLanguageSelectorSection } from "@/features/typing-language-switcher/ui/KeyboardLanguageSelectorSection";
 import { CONFIG_LANGUAGE } from "@/shared/assets/language/CONFIG_LANGUAGE";
 import type { LanguageConfig } from "@/shared/assets/language/CONFIG_LANGUAGE";
 import type { TypingStats, SecondSnapshot } from "@/entities/session";
@@ -22,16 +21,18 @@ import {
   type Mode,
 } from "@/features/change-mode/ui/ModeSelectorKeyboardTrainer";
 import styles from "./TrainerPage.module.css";
+import { RotateCcw } from "lucide-react";
 
 export const TrainerPage = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState<LanguageConfig>(
-    CONFIG_LANGUAGE[0] || {
-      id: "russian",
-      label: "Русский",
-      baseLang: "ru",
-      fileName: "russian.json",
-    },
-  );
+  const [selectedTypingLanguage, setSelectedTypingLanguage] =
+    useState<LanguageConfig>(
+      CONFIG_LANGUAGE[0] || {
+        id: "russian",
+        label: "Русский",
+        baseLang: "ru",
+        fileName: "russian.json",
+      },
+    );
 
   const [completedStats, setCompletedStats] = useState<{
     stats: TypingStats;
@@ -108,7 +109,7 @@ export const TrainerPage = () => {
         try {
           const category = (quoteLength as QuoteLengthCategory) || "all";
           const quote = await getRandomQuote(
-            selectedLanguage.baseLang,
+            selectedTypingLanguage.baseLang,
             category,
           );
 
@@ -123,7 +124,9 @@ export const TrainerPage = () => {
       } else {
         setCurrentQuote(null);
 
-        const wordsPool = await loadLanguageWords(selectedLanguage.fileName);
+        const wordsPool = await loadLanguageWords(
+          selectedTypingLanguage.fileName,
+        );
 
         if (isMounted) {
           setCurrentWordsPool(wordsPool);
@@ -150,7 +153,14 @@ export const TrainerPage = () => {
     return () => {
       isMounted = false;
     };
-  }, [selectedLanguage, mode, wordsCount, timeSecond, quoteLength, isInfinite]);
+  }, [
+    selectedTypingLanguage,
+    mode,
+    wordsCount,
+    timeSecond,
+    quoteLength,
+    isInfinite,
+  ]);
 
   const handleLoadMoreWords = useCallback(() => {
     if (mode === "words" && isInfinite && currentWordsPool.length > 0) {
@@ -196,21 +206,15 @@ export const TrainerPage = () => {
       )}
 
       <div className={styles.typingWrapper}>
-        {isModalChangeTypingLanguage && (
-          <ChangeLanguageTypingModal
-            selectedId={selectedLanguage.id}
-            onClose={() => setIsModalChangeTypingLanguage(false)}
-            onSelectLanguage={(langConfig) => setSelectedLanguage(langConfig)}
-          />
-        )}
-
-        <div className={styles.language} title="Выбрать язык печати">
-          <button onClick={() => setIsModalChangeTypingLanguage(true)}>
-            {translateIcon}
-            <span>{selectedLanguage.label}</span>
-          </button>
-        </div>
-
+        <KeyboardLanguageSelectorSection
+          isOpen={isModalChangeTypingLanguage}
+          setIsModalChangeTypingLanguage={setIsModalChangeTypingLanguage}
+          onClose={() => setIsModalChangeTypingLanguage(false)}
+          onSelectLanguage={(langConfig) =>
+            setSelectedTypingLanguage(langConfig)
+          }
+          selectedLanguage={selectedTypingLanguage}
+        />
         {completedStats ? (
           <ResultScreen
             stats={completedStats.stats}
@@ -234,6 +238,14 @@ export const TrainerPage = () => {
         {!completedStats && mode === "quote" && currentQuote && !isLoading && (
           <div className={styles.quoteSource}>— {currentQuote.source}</div>
         )}
+        {/* <div
+          className={styles.container_restartTest}
+          title="Перезапустить тест"
+        >
+          <button onClick={handleRestart}>
+            <RotateCcw />
+          </button>
+        </div> */}
       </div>
     </div>
   );

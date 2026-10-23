@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "./ChangeLanguageTypingModal.module.css";
+import styles from "./ChangeLanguageModal.module.css";
 import { CONFIG_LANGUAGE } from "@/shared/assets/language/CONFIG_LANGUAGE";
-import type { ChangeLanguageTypingModalProps } from "../../model/types";
+import type { ChangeLanguageModalProps } from "..//model/types";
 
-export const ChangeLanguageTypingModal = ({
-  selectedId,
+export const ChangeLanguageModal = ({
   onClose,
   onSelectLanguage,
-}: ChangeLanguageTypingModalProps) => {
+}: ChangeLanguageModalProps) => {
   const [search, setSearch] = useState("");
   const searchLanguageInputRef = useRef<HTMLInputElement>(null);
   const filterLanguage = CONFIG_LANGUAGE.filter((item) =>
