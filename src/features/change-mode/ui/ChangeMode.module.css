@@ -1,0 +1,138 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.desktop_panel {
+  display: flex;
+  width: 100%;
+  border-radius: 8px;
+  user-select: none;
+  padding: 8px 16px;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.group {
+  display: flex;
+  align-items: flex-start;
+  border-radius: 12px;
+  padding: 8px 16px;
+  transition: 0.5s ease;
+  background-color: var(--modal-br);
+}
+.group:nth-child(1) {
+  align-items: flex-start;
+  position: static;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  min-width: 32px;
+  padding: 0 10px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #646669;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  gap: 5px;
+}
+.btn:hover {
+  color: white;
+}
+.btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+.btn svg:nth-of-type(2) {
+  background-color: aliceblue;
+}
+.active {
+  color: #2196f3;
+}
+.line {
+  border: 1px solid var(--border-color);
+  height: 100%;
+}
+.btn_svg {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #6c7086);
+  font-weight: 600;
+  cursor: pointer;
+
+  border-radius: 11px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+.mobile_open_button {
+  margin-top: 10px;
+  display: none;
+  background-color: transparent;
+  border: 0;
+  color: var(--color-white);
+  background-color: var(--modal-br);
+  padding: 15px;
+  border-radius: 20px;
+  font-size: 1rem;
+}
+.container_mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000000a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+.panel_mobile {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--modal-bg-main);
+  width: 90%;
+  height: 90%;
+  border-radius: 20px;
+  padding: 20px;
+  gap: 10px;
+  overflow: scroll;
+}
+.line {
+  background-color: var(--modal-br);
+  height: 5px;
+  border-radius: 20px;
+}
+@media (max-width: 795px) {
+  .desktop_panel {
+    display: none;
+  }
+  .mobile_open_button {
+    display: block;
+  }
+  .group {
+    flex-direction: column;
+    gap: 10px;
+    background-color: transparent;
+    padding: 0;
+  }
+  .group button {
+    align-items: center;
+    width: 100%;
+    background-color: var(--modal-br);
+    padding: 20px;
+    font-size: 20px;
+  }
+  .group svg {
+    display: none;
+  }
+}

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { TypingBox } from "@/widgets/typing-box";
 import { ResultScreen } from "@/widgets/result-screen/ui/ResultScreen";
-import { MobileModeSelectorTrainer } from "@/features/change-mode";
 import {
   loadLanguageWords,
   getRandomWordsFromPool,
@@ -16,12 +15,12 @@ import {
   type QuoteLengthCategory,
 } from "@/entities/quote";
 import {
-  ModeSelectorKeyboardTrainer,
+  ChangeMode,
   type OptionValue,
   type Mode,
-} from "@/features/change-mode/ui/ModeSelectorKeyboardTrainer";
+} from "@/features/change-mode";
 import styles from "./TrainerPage.module.css";
-import { RotateCcw } from "lucide-react";
+// import { RotateCcw } from "lucide-react";
 
 export const TrainerPage = () => {
   const [selectedTypingLanguage, setSelectedTypingLanguage] =
@@ -177,33 +176,12 @@ export const TrainerPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.desktopTopBar}>
-        <ModeSelectorKeyboardTrainer
-          mode={mode}
-          onModeChange={setMode}
-          onValueChange={handleValueChange}
-          selectedValue={activeValue}
-        />
-      </div>
-
-      <div className={styles.mobileSettingsBar}>
-        <button
-          className={styles.settingsButton}
-          onClick={() => setIsModileSettingsOpen(true)}
-        >
-          Настройки теста
-        </button>
-      </div>
-
-      {isModileSettingsOpen && (
-        <MobileModeSelectorTrainer
-          mode={mode}
-          onModeChange={setMode}
-          onValueChange={handleValueChange}
-          selectedValue={activeValue}
-          onClose={() => setIsModileSettingsOpen(false)}
-        />
-      )}
+      <ChangeMode
+        mode={mode}
+        onModeChange={setMode}
+        onValueChange={handleValueChange}
+        selectedValue={activeValue}
+      />
 
       <div className={styles.typingWrapper}>
         <KeyboardLanguageSelectorSection

@@ -13,19 +13,6 @@
   padding-top: 2%;
   margin-bottom: auto;
 }
-.mobileSettingsBar {
-  width: 100%;
-  display: none;
-  justify-content: center;
-  padding-top: 2%;
-  margin-bottom: auto;
-}
-.settingsButton {
-  background-color: transparent;
-  border: 0;
-  color: #575656;
-  font-size: 20px;
-}
 .typingWrapper {
   flex: 1;
   width: 100%;
@@ -38,7 +25,7 @@
   color: var(--text-muted);
   padding-top: 10px;
 }
-.container_restartTest {
+/* .container_restartTest {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,14 +42,8 @@
   cursor: pointer;
   transform: rotate(-360deg);
   transition: 0.6s;
-}
+} */
 @media (max-width: 645px) {
-  .desktopTopBar {
-    display: none;
-  }
-  .mobileSettingsBar {
-    display: flex;
-  }
   .typingWrapper {
     margin-top: 10%;
   }
