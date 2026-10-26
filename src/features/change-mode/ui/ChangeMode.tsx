@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Settings } from "lucide-react";
 import styles from "./ChangeMode.module.css";
 import { OPTIONS_BY_MODE, BUTTON_CONFIG, OPTION_LABELS } from "../model/Config"; // конфиги для отображения
-import { xIcon } from "@/shared/assets/svg/Change-modeSvg";
 import { CustomValueModal } from "./CustomValueModal/CustomValueModal";
 
 import type {
@@ -86,6 +85,7 @@ export const ChangeMode: React.FC<ModeSelectorKeyboardTrainerProps> = ({
             title="Задать свое значение"
           >
             <Settings size={20} />
+            <p className={styles.hidden_custom}>Свое значение</p>
           </button>
         )}
       </div>

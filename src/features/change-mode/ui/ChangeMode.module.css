@@ -101,7 +101,6 @@
   flex-direction: column;
   background-color: var(--modal-bg-main);
   width: 90%;
-  height: 90%;
   border-radius: 20px;
   padding: 20px;
   gap: 10px;
@@ -111,6 +110,9 @@
   background-color: var(--modal-br);
   height: 5px;
   border-radius: 20px;
+}
+.hidden_custom {
+  display: none;
 }
 @media (max-width: 795px) {
   .desktop_panel {
@@ -134,5 +136,8 @@
   }
   .group svg {
     display: none;
+  }
+  .hidden_custom {
+    display: flex;
   }
 }
