@@ -12,8 +12,6 @@ export const ProfilePage = () => {
     typingTime: 0,
   });
 
-  const [isNotFound, setIsNotFound] = useState(false);
-  const [isNotLoggedIn, setIsNotLoggedIn] = useState(false);
   const { username } = useParams();
   const navigate = useNavigate();
 
@@ -53,19 +51,6 @@ export const ProfilePage = () => {
         navigate("/404");
       });
   }, [username, navigate]);
-
-  // // Если пользователь не залогинен и зашел на /profile без ID
-  // if (isNotLoggedIn) {
-  //   return (
-  //     <div className={styles.container}>
-  //       <div className={styles.container_info}>
-  //         <p  }}>
-  //           Пожалуйста, войдите в систему.
-  //         </p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   const dataJoin = profileData.createdAt
     ? new Date(profileData.createdAt).toLocaleDateString("ru-RU", {
