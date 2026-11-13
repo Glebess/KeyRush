@@ -1,23 +1,23 @@
 :root {
   /* Базовые цвета сайта */
 
-  --bg-main: #191a1b;
-  --bg-secondary: #181717;
-  --br-main: #141313;
+  --bg-main: #13171f;
+  --bg-secondary: #1e232d;
+  --br-main: #090c11;
 
   /* Цвета текста */
-  --text-primary: #757272;
-  --text-muted: #3f3f3f;
-  --text-white: #cccccc;
+  --text-primary: #dbe0e8;
+  --text-muted: #a2aab8;
+  --text-white: #f5f7fa;
 
   /* Акцентные цвета для тренажера */
-  --color-correct: #4caf50;
-  --color-error: #f44336;
-  --color-caret: #2196f3;
+  --color-correct: #59d38c;
+  --color-error: #f66d67;
+  --color-caret: #4bc6fa;
 
   /* Цвета модалок */
-  --modal-bg-main: #191a1b;
-  --modal-br: #111111;
+  --modal-bg-main: #262d39;
+  --modal-br: #333c4c;
 
   /* Глобальный сброс стилей */
   body {
