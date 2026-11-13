@@ -89,7 +89,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #000000a6;
+  background-color: var(--modal-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,7 +99,8 @@
 .panel_mobile {
   display: flex;
   flex-direction: column;
-  background-color: var(--modal-bg-main);
+  background-color: #1a1a1a;
+  border: 1px solid #2e2e2e;
   width: 90%;
   border-radius: 20px;
   padding: 20px;
@@ -130,9 +131,15 @@
   .group button {
     align-items: center;
     width: 100%;
-    background-color: var(--modal-br);
+    background-color: #1c1c1c;
+    color: #ffffff;
+    border: 1px solid #5a5a5a;
     padding: 20px;
     font-size: 20px;
+  }
+  .group button.active {
+    color: #64b5f6;
+    border-color: #2196f3;
   }
   .group svg {
     display: none;

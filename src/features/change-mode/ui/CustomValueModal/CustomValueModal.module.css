@@ -4,46 +4,63 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #000000a6;
+  background-color: rgba(0, 0, 0, 0.72);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   backdrop-filter: blur(3px);
 }
+
 .modal {
   display: flex;
   flex-direction: column;
-  background-color: var(--modal-bg-main);
-  border: 5px solid var(--modal-br);
-  padding: 50px;
-  max-width: 500px;
-  border-radius: 20px;
-  gap: 10px;
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  padding: 28px;
+  width: min(92vw, 460px);
+  border-radius: 16px;
+  gap: 14px;
+  color-scheme: dark;
 }
+
 .modal h3 {
-  letter-spacing: 1.5px;
-  font-size: 20px;
-  color: white;
+  letter-spacing: 0.4px;
+  font-size: 22px;
+  color: #ffffff;
 }
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
+
 .input_container {
   display: flex;
   position: relative;
 }
+
 .input_container input {
-  background-color: #131313;
+  background: #101010;
   width: 100%;
-  padding: 10px;
+  padding: 12px 36px 12px 12px;
   outline: 0;
-  border: 0;
+  border: 1px solid #333333;
   border-radius: 10px;
-  color: white;
+  color: #ffffff;
+  caret-color: #2196f3;
+  font-size: 16px;
 }
+
+.input_container input::placeholder {
+  color: #c8c8c8;
+}
+
+.input_container input:focus {
+  border-color: #2196f3;
+}
+
 .input_container input::-webkit-outer-spin-button,
 .input_container ::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -52,9 +69,10 @@
 .input[type="number"] {
   -moz-appearance: textfield;
 }
+
 .svg_container {
   position: absolute;
-  right: 5px;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -62,48 +80,61 @@
   justify-content: center;
   font-weight: 800;
 }
+
 .svg_container svg {
   width: 20px;
   height: 20px;
 }
+
 .errorIcon {
-  color: #ca4754;
+  color: #ff8a80;
 }
+
 .successIcon {
-  color: #2ecc71;
+  color: #69f0ae;
 }
 
 .form h5 {
-  color: white;
+  color: #eeeeee;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
 }
+
 .span_info {
-  color: #888;
+  color: #d6d6d6;
 }
 
 .span_keyboard_help {
-  color: #2196f3;
-  background-color: #131313;
-  border-radius: 2.5px;
-  padding: 0px 5px;
+  color: #ffffff;
+  background: #1565c0;
+  border-radius: 4px;
+  padding: 1px 6px;
 }
+
 .form button {
-  background-color: #131313;
+  background: #1565c0;
   border: 0;
-  color: white;
-  padding: 10px 10px;
+  color: #ffffff;
+  padding: 12px;
   border-radius: 10px;
-  transition: 0.3s ease;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
 }
+
 .form button:hover {
   cursor: pointer;
-  background-color: white;
-  color: black;
+  background: #1976d2;
+  color: #ffffff;
 }
+
 .form button:disabled {
-  background-color: #1c1d1f;
-  color: gray;
+  background: #3a3a3a;
+  color: #bdbdbd;
   cursor: not-allowed;
 }
+
 @media (max-width: 400px) {
   .modal {
     padding: 20px;

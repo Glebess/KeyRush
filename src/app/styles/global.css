@@ -1,38 +1,41 @@
 :root {
   /* Базовые цвета сайта */
-
-  --bg-main: #191a1b;
-  --bg-secondary: #181717;
-  --br-main: #141313;
+  --bg-main: #1a1b1c;
+  --bg-secondary: #242424;
+  --br-main: #131313;
+  --border-color: #3a3a3a;
 
   /* Цвета текста */
-  --text-primary: #757272;
-  --text-muted: #3f3f3f;
-  --text-white: #cccccc;
+  --text-primary: #b7b3b3;
+  --text-muted: #8a8585;
+  --text-white: #f2f2f2;
 
   /* Акцентные цвета для тренажера */
   --color-correct: #4caf50;
   --color-error: #f44336;
+  --color-incorrect: var(--color-error);
   --color-caret: #2196f3;
 
   /* Цвета модалок */
-  --modal-bg-main: #191a1b;
-  --modal-br: #111111;
-
-  /* Глобальный сброс стилей */
-  body {
-    background-color: var(--br-main);
-    color: var(--text-primary);
-    margin: 0;
-    padding: 0;
-
-    font-family:
-      "Inter",
-      system-ui,
-      -apple-system,
-      sans-serif;
-  }
+  --modal-overlay: rgba(0, 0, 0, 0.72);
+  --modal-bg-main: #2a2a2a;
+  --modal-br: #1a1a1a;
+  --modal-border: #454545;
+  --modal-hover: #383838;
 }
+
+body {
+  background-color: var(--br-main);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
