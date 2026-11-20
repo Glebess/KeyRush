@@ -20,7 +20,6 @@ import {
   type Mode,
 } from "@/features/change-mode";
 import styles from "./TrainerPage.module.css";
-// import { RotateCcw } from "lucide-react";
 
 export const TrainerPage = () => {
   const [selectedTypingLanguage, setSelectedTypingLanguage] =

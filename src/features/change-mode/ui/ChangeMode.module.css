@@ -20,7 +20,7 @@
   border-radius: 12px;
   padding: 8px 16px;
   transition: 0.5s ease;
-  background-color: var(--modal-br);
+  background-color: #101010;
 }
 .group:nth-child(1) {
   align-items: flex-start;

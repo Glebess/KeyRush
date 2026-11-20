@@ -1,6 +1,7 @@
 import styles from "./CustomValueModal.module.css";
 import type { CustomValueModalProps } from "../../model/types";
 import { useEffect, useRef, useState } from "react";
+import { useModalDismiss } from "@/shared/lib/useModalDismiss";
 
 export const CustomValueModal: React.FC<CustomValueModalProps> = ({
   isOpen,
@@ -14,7 +15,8 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
   const min = 0;
   const max = mode === "words" ? 100000 : 86400;
 
-  //Фокус на инпуте при открытии
+  useModalDismiss(onClose);
+
   useEffect(() => {
     inputRef.current?.focus();
   }, [isOpen]);
@@ -91,14 +93,13 @@ export const CustomValueModal: React.FC<CustomValueModalProps> = ({
       );
     }
   };
-  const handleCloseModal = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      onClose();
-    }
-  };
   return (
-    <div onKeyDown={handleCloseModal} className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className={styles.overlay} onClick={onClose}>
+      <div
+        className={styles.modal}
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
         <h3>
           {mode === "words"
             ? "Свое количество слов"

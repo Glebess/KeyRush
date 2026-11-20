@@ -1,24 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./ProfilePage.module.css";
-import avatar from "./images.jpg";
 
 export const ProfilePage = () => {
-  const [profileData, setProfileData] = useState({
-    username: "",
-    createdAt: null,
-    totalTests: 0,
-    completedTests: 0,
-    typingTime: 0,
-  });
-
+  const [profileData, setProfileData] = useState(null);
   const { username } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     let targetUserName = username;
 
-    // Если в URL нет ID, берем из localStorage (для своего профиля)
     if (!targetUserName) {
       const savedUser = localStorage.getItem("user");
       if (savedUser) {
@@ -36,7 +27,6 @@ export const ProfilePage = () => {
       return;
     }
 
-    // Запрос к бэкенду по username пользователя
     fetch(`http://localhost:5000/api/user/${targetUserName}`)
       .then((res) => res.json())
       .then((data) => {
@@ -52,46 +42,51 @@ export const ProfilePage = () => {
       });
   }, [username, navigate]);
 
-  const dataJoin = profileData.createdAt
+  const dataJoin = profileData?.createdAt
     ? new Date(profileData.createdAt).toLocaleDateString("ru-RU", {
         day: "numeric",
-        month: "short",
+        month: "long",
         year: "numeric",
       })
     : "неизвестно";
 
+  const initial = (profileData?.username || "?").trim().charAt(0).toUpperCase();
+
   return (
-    <div className={styles.container}>
-      <div className={styles.container_info}>
-        <div className={styles.container_mainInfo}>
-          <div className={styles.container_avatar}>
-            <div className={styles.avatar}>
-              <img src={avatar} alt="avatar" />
-            </div>
-          </div>
-          <div className={styles.container_nickName}>
-            <p className={styles.nickName}>{profileData.username}</p>
-            <p className={styles.data_join}>{`Зарегистрирован ${dataJoin}`}</p>
-          </div>
-        </div>
+    <section className={styles.page}>
+      <article className={styles.card}>
+        {!profileData ? (
+          <p className={styles.loading}>Загрузка профиля...</p>
+        ) : (
+          <>
+            <header className={styles.identity}>
+              <div className={styles.avatar} aria-hidden="true">
+                {initial}
+              </div>
+              <div className={styles.identityText}>
+                <p className={styles.eyebrow}>Профиль</p>
+                <h1>{profileData.username}</h1>
+                <p className={styles.joined}>На сайте с {dataJoin}</p>
+              </div>
+            </header>
 
-        <div className={styles.line}></div>
-
-        <div className={styles.container_test_count}>
-          <div className={styles.test_count}>
-            <p>Всего тестов</p>
-            <p>{profileData.totalTests}</p>
-          </div>
-          <div className={styles.test_count}>
-            <p>Тестов закончено</p>
-            <p>{profileData.completedTests}</p>
-          </div>
-          <div className={styles.test_count}>
-            <p>Время печати</p>
-            <p>{profileData.typingTime}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            <dl className={styles.stats}>
+              <div className={styles.stat}>
+                <dt>Всего тестов</dt>
+                <dd>{profileData.totalTests}</dd>
+              </div>
+              <div className={styles.stat}>
+                <dt>Пройдено</dt>
+                <dd>{profileData.completedTests}</dd>
+              </div>
+              <div className={styles.stat}>
+                <dt>Время печати</dt>
+                <dd>{profileData.typingTime}</dd>
+              </div>
+            </dl>
+          </>
+        )}
+      </article>
+    </section>
   );
 };

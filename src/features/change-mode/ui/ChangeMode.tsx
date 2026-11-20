@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Settings } from "lucide-react";
+import { useModalDismiss } from "@/shared/lib/useModalDismiss";
 import styles from "./ChangeMode.module.css";
 import { OPTIONS_BY_MODE, BUTTON_CONFIG, OPTION_LABELS } from "../model/Config"; // конфиги для отображения
 import { CustomValueModal } from "./CustomValueModal/CustomValueModal";
@@ -9,6 +10,28 @@ import type {
   OptionValue,
   ModeSelectorKeyboardTrainerProps,
 } from "../model/types";
+
+function MobileSettingsModal({
+  onClose,
+  children,
+}: {
+  onClose: () => void;
+  children: React.ReactNode;
+}) {
+  useModalDismiss(onClose);
+
+  return (
+    <div className={styles.container_mobile} onClick={onClose}>
+      <div
+        className={styles.panel_mobile}
+        onClick={(event) => event.stopPropagation()}
+        onKeyDown={(event) => event.stopPropagation()}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export const ChangeMode: React.FC<ModeSelectorKeyboardTrainerProps> = ({
   mode = "words",
@@ -108,19 +131,11 @@ export const ChangeMode: React.FC<ModeSelectorKeyboardTrainerProps> = ({
       </button>
 
       {isMobileModalOpen && (
-        <div
-          className={styles.container_mobile}
-          onClick={() => setIsMobileModalOpen(false)}
-        >
-          <div
-            className={styles.panel_mobile}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {renderModeList()}
-            <div className={styles.line}></div>
-            {renderOptionsList()}
-          </div>
-        </div>
+        <MobileSettingsModal onClose={() => setIsMobileModalOpen(false)}>
+          {renderModeList()}
+          <div className={styles.line}></div>
+          {renderOptionsList()}
+        </MobileSettingsModal>
       )}
 
       {isCustomValueModalOpen && (
