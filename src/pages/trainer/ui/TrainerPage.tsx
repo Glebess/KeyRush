@@ -51,9 +51,6 @@ export const TrainerPage = () => {
   const [sessionKey, setSessionKey] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [isModileSettingsOpen, setIsModileSettingsOpen] =
-    useState<boolean>(false);
-
   const activeValue =
     mode === "words" ? wordsCount : mode === "time" ? timeSecond : quoteLength;
 

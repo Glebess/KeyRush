@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./ProfilePage.module.css";
-
+import { LogOut } from "lucide-react";
 export const ProfilePage = () => {
   const [profileData, setProfileData] = useState(null);
   const { username } = useParams();
@@ -52,6 +52,10 @@ export const ProfilePage = () => {
 
   const initial = (profileData?.username || "?").trim().charAt(0).toUpperCase();
 
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   return (
     <section className={styles.page}>
       <article className={styles.card}>
@@ -68,6 +72,13 @@ export const ProfilePage = () => {
                 <h1>{profileData.username}</h1>
                 <p className={styles.joined}>На сайте с {dataJoin}</p>
               </div>
+              <button
+                className={styles.logOut}
+                title="Выйти с аккаунта"
+                onClick={() => handleLogOut()}
+              >
+                <LogOut size={26} />
+              </button>
             </header>
 
             <dl className={styles.stats}>
